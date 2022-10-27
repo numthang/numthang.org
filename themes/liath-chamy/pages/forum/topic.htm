@@ -1,0 +1,14 @@
+title = "Forum"
+url = "/forum/topic/:slug"
+layout = "main"
+
+[forumTopic]
+memberPage = "forum/member"
+channelPage = "forum/channel"
+==
+<section class="module-small">
+    <div class="container">
+        <h1>{{ topic.subject }}</h1>
+        {% component 'forumTopic' %}
+    </div>
+</section>

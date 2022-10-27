@@ -1,0 +1,19 @@
+
+  <div class="localepicker {% if dropdown %}dropdown dropdown-end{% else %}dropup dropup-center{% endif %}">
+      <button type="button" data-rat-toggle="dropdown" aria-expanded="false" class="dropdown-toggle close-on-select">
+          {% for site in sitePicker.sites %}
+            {% if site.code == this.site.code %}
+              <img src="{{ ('assets/images/flags/' ~ site.code ~ '.svg') | theme }}" alt="{{ site.name }}" />
+            {% endif %}
+          {% endfor %}
+      </button>
+
+      <ul class="dropdown-menu{% if dropdownPosition %} {{ dropdownPosition }}{% endif %}">
+        {% for site in sitePicker.sites %}
+            <li><a href="{{ site.url }}" class="dropdown-item{% if site.code == this.site.code %} active{% endif %}">
+              <img src="{{ ('assets/images/flags/' ~ site.locale ~ '.svg') | theme }}" alt="{{ site.name }}" />
+                  {{ site.name }}
+              </a></li>
+          {% endfor %}
+      </ul>
+  </div>

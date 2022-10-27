@@ -1,0 +1,36 @@
+title = "Blog Post"
+url = "/blog/post/:slug"
+layout = "default-layout"
+description = "Viewing a single blog post"
+is_hidden = 0
+robot_index = "index"
+robot_follow = "follow"
+
+[blogPost]
+slug = "{{ :slug }}"
+categoryPage = "blog/category"
+
+[blogCategories]
+slug = "{{ :slug }}"
+displayEmpty = 0
+categoryPage = "blog/category"
+==
+<?php
+function onEnd()
+{
+    // Optional - set the page title to the post title
+    if (isset($this->post))
+        $this->page->title = $this->post->title;
+}
+?>
+==
+<section class="uk-container uk-container-center uk-margin-large-top uk-margin-large-bottom">
+    <div class="uk-grid">
+        <div class="uk-width-medium-3-4">
+            {% component 'blogPost' %}
+        </div>
+        <div class="uk-width-medium-1-4">
+            {% partial 'blog/categories' %}
+        </div>
+    </div>
+</section>

@@ -1,0 +1,121 @@
+##
+description = "Page Builder Layout"
+
+[localePicker]
+forceUrl = 0
+
+[alternateHrefLangElements]
+
+[staticPage]
+
+[staticBreadcrumbs]
+
+[viewBag]
+staticBreadcrumbs_skipLast = true
+==
+<?php
+function onInit()
+{
+    $this['legacy'] = version_compare(\System\Classes\UpdateManager::instance()->getCurrentVersion(), '3.0.0', '<');
+    $this['octoberVersion'] = \System\Classes\UpdateManager::instance()->getCurrentVersion();
+}
+?>
+==
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+    {% partial 'page/meta' %}
+</head>
+<body class="theme-{{ this.theme.id }} {{ 'page-' ~ this.page.id }} layout-{{ this.layout.id }}{% if this.theme.dark_scheme %} dark{% else %} light{% endif %}">
+    <script>
+        var scheme = sessionStorage.getItem('newshub-color-scheme');
+        if (scheme) {
+            document.body.classList.remove(scheme === 'light'? 'dark': 'light');
+            document.body.classList.add(scheme);
+        }
+        if (document.currentScript) {
+            document.currentScript.remove();
+        }
+    </script>
+    
+    {% partial 'page/header' %}
+
+    {variable 
+        name="flexbox_backend_js" 
+        type="partial" 
+        path="~/themes/newshub/config/partials/flexbox_assets.htm" 
+        tab="theme.newshub::lang.builder.tab.content_elements" }{/variable}
+    {variable 
+        name="content_elements" 
+        type="repeater" 
+        displayMode="builder" 
+        label="theme.newshub::lang.builder.content_elements.label" 
+        prompt="theme.newshub::lang.builder.content_elements.prompt" 
+        tab="theme.newshub::lang.builder.tab.content_elements"
+        groups="#/newshub/config/builder.yaml" 
+        titleFrom="title"}{/variable}
+    {variable 
+        name="use_container" 
+        type="switch" 
+        label="theme.newshub::lang.builder.use_container.label" 
+        comment="theme.newshub::lang.builder.use_container.comment" 
+        tab="theme.newshub::lang.builder.tab.page_configuration" 
+        span="left"}1{/variable}
+    {variable 
+        name="show_sidebar" 
+        type="switch" 
+        label="theme.newshub::lang.builder.show_sidebar.label" 
+        comment="theme.newshub::lang.builder.show_sidebar.comment" 
+        tab="theme.newshub::lang.builder.tab.page_configuration" 
+        span="right"}1{/variable}
+    
+    <div id="pageContent">
+        <div class="post-single page-single">
+            <section class="section section-page">
+                <header class="py-6 bg-light dark:bg-dark">
+                    <div class="container">
+                        <div class="post-header">
+                            {% component 'staticBreadcrumbs' skipLast=true %}
+                            <h1 class="post-title">{{ page.title | default(this.page.title) }}</h1>
+                        </div>
+                    </div>
+                </header>
+
+                <article class="section py-6{{ use_container == '1' and show_sidebar == '1' ? ' section-with-sidebar' : '' }}">
+                    {% if use_container == '1' %}<div class="container">{% endif %}
+                        <div class="post-content main-area">
+                            {% for element in content_elements %}
+                                {% if hasPartial('contentelements/' ~ element._group) %}
+                                    {% partial ('contentelements/' ~ element._group) config=element group=element._group %}
+                                {% else %}
+                                    Content Element "{{ element._group }}" not found
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        
+                        {% if use_container == '1' and show_sidebar == '1' %}
+                            <aside class="post-aside sidebar-area">
+                                {% partial 'sidebars/page' %}
+                            </aside>
+                        {% endif %}
+                    {% if use_container == '1' %}</div>{% endif %}
+                </article>
+            </section>
+        </div>
+    </div>
+    
+    <footer id="pageFooter" class="{% if this.theme.dark_footer %}bg-dark dark{% else %}bg-light dark:bg-dark{% endif %} py-5">
+        <div class="container">
+            {% partial 'page/footer' %}
+        </div>
+    </footer>
+
+    {% if this.theme.to_top_button %}
+        <a href="#top" class="scroll-to-top">
+            {% partial 'icons/bootstrap/arrow-up-short' %}
+        </a>
+    {% endif %}
+
+    {% partial 'page/scripts' %}
+</body>
+</html>

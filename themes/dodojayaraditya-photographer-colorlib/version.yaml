@@ -1,0 +1,27 @@
+1.0.0: Theme initialization
+1.0.1: 
+  - Code Restructure
+  - Adding blog page integration with Blog plugin "rainlab.blog" by Alexey Bobkov, Samuel Georges
+  - Adding contact page integration with ContactUs plugin "devinx.contactus" by DevINX
+  - Adding Customise Theme for Theme Options
+
+1.0.2:
+  - Fix Bugs
+
+1.0.3:
+  - Integrate blog Featured Images to be display in Hero Slider Homepage
+  - Integrate blog Featured Images to be display in Portfolio page
+  - Adding visibility feature in Intro Section Homepage
+  - Adding visibility feature in Social Menu Section Homepage
+  - Adding visibility feature in instafeed sections in About & Contact pages
+  - Adding visibility feature in google maps section
+  - Adding visibility feature in skills & services section in About page
+  - Sticky Footer position
+  - Update forms fields
+  - update style.css
+
+1.0.4: Fix bug on Hero slider & Social Menu
+1.0.5: Fix Blog/news Pagination
+1.0.6: Adding opacity style in blog featured images & Fix Typo
+1.0.7: Add logo form to change the existing logo.
+1.0.8: Changing the require contact plugin to Flexi Contact by Lamin Sanneh.

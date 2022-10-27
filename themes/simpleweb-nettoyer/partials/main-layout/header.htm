@@ -1,0 +1,40 @@
+[staticMenu mainMenu]
+code = "main-menu"
+
+[viewBag]
+==
+<header>
+  <nav class="uk-navbar" data-uk-sticky>
+    <div class="uk-navbar-brand"><a href="{{ 'home'|page }}">{{ this.theme.site_name }}</a></div>
+    <a href="#offcanvas" class="uk-navbar-toggle" data-uk-offcanvas>Menu </a>
+			<div id="offcanvas" class="uk-offcanvas">
+        <div class="uk-offcanvas-bar uk-offcanvas-bar-flip">
+          {# Custom navigation implementation that only shows 2 levels deep #}
+
+        {% import _self as nav %}
+
+        {% macro render_menu(items) %}
+          {% import _self as nav %}
+
+          {% for item in items %}
+            <li role="presentation" class="{{ item.isActive ? 'uk-active' : '' }} {{ item.isChildActive ? 'child-active' : '' }}">
+              <a href="{{ item.url }}">{{ item.title }}</a>
+                {% if item.items %}
+                <li class="uk-parent">
+                  <a href="#">{{ item.title }}</a>
+                  <ul class="uk-nav-sub">{{ nav.render_menu(item.items) }}</ul>
+                </li>
+                {% endif %}
+            </li>
+          {% endfor %}
+        {% endmacro %}
+
+        {% if mainMenu.menuItems %}
+          <ul class="uk-nav uk-nav-offcanvas uk-nav-parent-icon" data-uk-nav>
+            {{ nav.render_menu(mainMenu.menuItems) }}
+          </ul>
+        {% endif %}
+        </div>
+      </div>
+  </nav>
+</header>

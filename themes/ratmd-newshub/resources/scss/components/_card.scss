@@ -1,0 +1,133 @@
+
+// ----------------------------------------
+//  Bootstrap Card Stylings
+// ----------------------------------------
+
+.card {
+    width: 100%;
+    
+    .card-body,
+    .card-text {
+        & > *:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    @include media-breakpoint-up(md) {
+        &.card-small {
+            width: 16rem;
+        }
+        &.card-medium {
+            width: 24rem;
+        }
+        &.card-large {
+            width: 32rem;
+        }
+        &.card-fullwidth {
+            width: 100%;
+        }
+    }
+}
+
+.dark .card:not(.card-simple) {
+    --#{$prefix}card-border-color: #{$gray-700};
+    --#{$prefix}card-color: #{$card-color};
+    --#{$prefix}card-bg: #{$gray-900};
+}
+
+
+// ----------------------------------------
+//  Simple Card Stylings
+// ----------------------------------------
+
+.card.card-simple {
+    border: 0;
+    padding: $spacer * 2;
+    margin-bottom: $spacer * 1.5;
+    background-color: $gray-100;
+    
+    .dark & {
+        background-color: $gray-900;
+    }
+    &:last-child {
+        margin-bottom: 0;
+    }
+
+    .card-img-top {
+        width: auto;
+        margin-top: -($spacer * 2);
+        margin-left: -($spacer * 2);
+        margin-right: -($spacer * 2);
+        margin-bottom: $spacer * 2;
+    }
+
+    .card-header,
+    .card-body {
+        border: 0;
+        padding: 0;
+        background-color: transparent;
+    }
+
+    .card-header {
+        margin-bottom: $spacer;
+    }
+
+    .card-title,
+    .card-subtitle {
+        display: block;
+        text-align: left;
+        line-height: 1.4rem;
+        font-family: $font-family-special;
+    }
+    .card-title {
+        color: $gray-700;
+        font-size: 1.4rem;
+        
+        .dark & {
+            color: $gray-400;
+        }
+    }
+    .card-subtitle {
+        color: $gray-600;
+        font-size: 0.9rem;
+    }
+
+    .card-body .post-button:not(:last-child) {
+        margin-bottom: $spacer;
+    }
+
+    .card-body .list-group-flush {
+        .list-group-item { 
+            padding: 0;
+            background-color: transparent;
+        }
+
+        a {
+            color: var(--#{$prefix}dark);
+            padding: var(--bs-list-group-item-padding-y) var(--bs-list-group-item-padding-x);
+            display: block;
+            text-decoration: none;
+            transition: color 0.20s ease, background-color 0.20s ease;
+            background-color: $gray-300;
+
+            .dark & {
+                color: var(--#{$prefix}light);
+                background-color: $gray-800;
+            }
+
+            &:hover {
+                color: var(--#{$prefix}light);
+                background-color: var(--#{$prefix}dark);
+            }
+        }
+    }
+
+    .card-footer {
+        margin-top: $spacer;
+        padding: $spacer * 2 0 0 0;
+        background-color: transparent;
+    }
+}
+.card-group > .card.card-simple {
+    margin-bottom: 0;
+}

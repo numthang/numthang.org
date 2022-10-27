@@ -1,0 +1,48 @@
+description = "Default layout"
+==
+<!DOCTYPE html>
+<html lang="{{ this.theme.site_lang }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{{ this.page.title }} | {{ this.theme.site_name }}</title>
+        <meta name="description" content="{{ this.page.meta_description }}">
+        <meta name="title" content="{{ this.page.meta_title }}">
+        <link rel="icon" type="image/png" href="{{ 'assets/images/october.png'|theme }}" />
+        <link href="{{ [
+            'assets/css/uikit.css',
+            'assets/css/components/accordion.css',
+            'assets/css/style.css',
+            'assets/css/animate.min.css'
+        ]|theme }}" rel="stylesheet">
+        {% styles %}
+    </head>
+    <body>
+		<!-- Header Banner with Navigation -->
+        {% partial "main-layout/header" %}
+
+        <!-- Main Content -->
+        {% page %}
+
+        <!-- Footer -->
+        {% partial "main-layout/footer" %}
+
+
+        <!-- Google Fonts -->
+        <link href='https://fonts.googleapis.com/css?family=Lato:400,300,700' rel='stylesheet' type='text/css'>
+        <!-- Scripts -->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script src="{{ [
+          '@framework',
+          '@framework.extras',
+          'assets/js/uikit.min.js',
+          'assets/js/components/sticky.min.js',
+          'assets/js/components/accordion.min.js',
+          'assets/js/wow.min.js'
+        ]|theme }}"></script>
+        <script>
+      	  new WOW().init();
+        </script>
+
+    </body>
+</html>

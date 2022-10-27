@@ -1,0 +1,78 @@
+description = "Section FAQ"
+
+[viewBag]
+==
+{% if this.theme.block_faq == '1' or this.theme.block_skills == '1' %}
+{% set fpFaq = this.theme.block_faq_repeater %}
+{% set fpSkills = this.theme.block_skills_repeater %}
+<section class="module">
+    <div class="container">
+        <div class="row">
+            {% if this.theme.block_faq == '1' and  this.theme.block_skills == '1' %}
+            <div class="col-sm-6">
+            {% else %}
+            <div class="col-sm-12">
+            {% endif %}
+                <h4 class="font-alt mb-30">{{ this.theme.block_faq_title }}</h4>
+                <div class="panel-group" id="accordion">
+                
+                    {% if fpFaq is not empty %}
+                    {% set faqFirst = fqFaq|first %}
+                    {% for faq in fpFaq %}
+                    
+                    {% if loop.first %}
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title font-alt">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#{{ faq.faq_unique }}">{{ faq.faq_question }}</a>
+                            </h4>
+                        </div>
+                        <div class="panel-collapse collapse in" id="{{ faq.faq_unique }}">
+                            <div class="panel-body">{{ faq.faq_answer|raw }}</div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title font-alt">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#{{ faq.faq_unique }}" class="collapsed">{{ faq.faq_question }}</a>
+                            </h4>
+                        </div>
+                        <div class="panel-collapse collapse" id="{{ faq.faq_unique }}">
+                            <div class="panel-body">{{ faq.faq_answer|raw }}</div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                    {% endif %}
+                    
+                </div>
+            </div>
+            
+            
+            {% if this.theme.block_faq == '1' and  this.theme.block_skills == '1' %}
+            <div class="col-sm-6">
+            {% else %}
+            <div class="col-sm-12">
+            {% endif %}
+                <h4 class="font-alt mb-30">{{ this.theme.block_skills_title }}</h4>
+                
+                {% if fpSkills is not empty %}
+                {% for skill in fpSkills %}
+                <h6 class="font-alt">
+                    <span class="{{ skill.skill_icon }}"></span> {{ skill.skill_name }}
+                </h6>
+                <div class="progress">
+                    <div class="progress-bar pb-dark" aria-valuenow="{{ skill.skill_value }}" role="progressbar" aria-valuemin="{{ skill.skill_min }}" aria-valuemax="{{ skill.skill_max }}">
+                        <span class="font-alt"></span>
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+                
+                
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}

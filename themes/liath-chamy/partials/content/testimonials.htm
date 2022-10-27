@@ -1,0 +1,43 @@
+description = "Section Testimonials"
+
+[viewBag]
+==
+{% if this.theme.block_testimonials == '1' %}
+{% set fpTestimonial = this.theme.block_testimonials_repeater %}
+<section class="module bg-dark-60 pt-0 pb-0 parallax-bg testimonial" data-background="{{ this.theme.block_testimonials_image|media }}">
+    <div class="testimonials-slider pt-140 pb-140">
+        <ul class="slides">
+        
+            {% if fpTestimonial is not empty %}
+            {% for testimonial in fpTestimonial %}
+            <li>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="module-icon"><span class="icon-quote"></span></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-8 col-sm-offset-2">
+                            <blockquote class="testimonial-text font-alt">{{ testimonial.testimonial_text|raw }}</blockquote>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4 col-sm-offset-4">
+                            <div class="testimonial-author">
+                                <div class="testimonial-caption font-alt">
+                                    <div class="testimonial-title">{{ testimonial.testimonial_name }}</div>
+                                    <div class="testimonial-descr">{{ testimonial.testimonial_company }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+            {% endif %}
+            
+        </ul>
+    </div>
+</section>
+{% endif %}

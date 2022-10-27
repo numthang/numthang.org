@@ -1,0 +1,91 @@
+name: Nettoyer
+description: A nice theme to start your next project. This theme is based on UIKIT.
+author: SimpleWeb
+code: Nettoyer
+homepage: 'https://www.simplewebdesign.at'
+require:
+    - RainLab.Blog
+    - RainLab.Pages
+
+form:
+    tabs:
+        fields:
+          #
+          # General tab.
+          #
+          site_name:
+              label: Site Name (e.g. Company Name)
+              comment: The name of the website, company name or something else. This is displayed in the navbar as text and page titles.
+              default: Nettoyer S
+              tab: Theme Settings
+          site_lang:
+              label: Site Language Code
+              comment: Language code in <html lang="en" for e.g.>
+              default: en
+              tab: Theme Settings
+          #
+          # Company Info.
+          #
+          company_name:
+              label: Company Name (e.g. Your Company name)
+              comment: Your Company Name or something else for the address block in the footer.
+              default: Company Name
+              tab: Theme Settings
+          address_footer:
+              label: Your Address
+              comment: Your Address for the address block in the footer.
+              default: Freeman Road 123, 76543 Nice Town
+              tab: Theme Settings
+          telephone_number:
+              label: Your Telephone number
+              comment: Your Telephone number for the address block in the footer.
+              default: 0123 / 45 67 890
+              tab: Theme Settings
+          fax_number:
+              label: Your Fax number
+              comment: Your Fax number for the address block in the footer.
+              default: 0123 / 45 67 890 1
+              tab: Theme Settings
+          #
+          # Social Media tab.
+          #
+          google_plus_id:
+              label: Google+ ID
+              comment: Add your Google+-Profile-ID here.
+              default: plus.google.com/untitled-tld
+              tab: Social Media Settings
+          google_plus_url:
+              label: Google+-URL
+              comment: Add your Google+-URL here.
+              default: https://plus.google.com/untitled-tld
+              tab: Social Media Settings
+          twitter_id:
+              label: TwitterID
+              comment: Add your TwitterID here.
+              default: twitter.com/untitled-tld
+              tab: Social Media Settings
+          twitter_url:
+              label: Twitter-URL
+              comment: Add your Twitter-URL here.
+              default: https://www.twitter.com/untitled-tld
+              tab: Social Media Settings
+          facebook_id:
+              label: FacebookID
+              comment: Add your FacebookID here.
+              default: facebook.com/untitled-tld
+              tab: Social Media Settings
+          facebook_url:
+              label: Facebook-URL
+              comment: Add your Facebook-URL here.
+              default: https://www.facebook.com/untitled-tld
+              tab: Social Media Settings
+          contact_text:
+              label: Contact text
+              comment: Add your Text here (e.g. Contact).
+              default: Contact
+              tab: Social Media Settings
+          contact_url:
+              label: Contact Page
+              comment: Add the url to your contact page here.
+              default: yoururl.com/contact
+              tab: Social Media Settings

@@ -1,0 +1,16 @@
+title = "Forum"
+url = "/forum"
+layout = "main"
+is_hidden = 0
+
+[forumChannels]
+memberPage = "forum/member"
+channelPage = "forum/channel"
+topicPage = "forum/topic"
+==
+<section class="module-small">
+    <div class="container">
+        <h1>Forum</h1>
+        {% component 'forumChannels' %}
+    </div>
+</section>

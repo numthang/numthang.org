@@ -1,0 +1,68 @@
+description = "Section Works"
+
+[viewBag]
+==
+<?php
+use Cms\Classes\Theme;
+
+function onStart() {
+    $theme = Theme::getActiveTheme();
+    $works = $theme->block_work_repeater;
+    $data = array(); $return = ''; $time = 0;
+    
+    foreach($works as $v) {
+        $exp = explode(" ", $v['work_sortclass']);
+        foreach($exp as $e) {
+            if (!in_array(ucfirst($e), $data)) {
+                $data[$e] = ucfirst($e);
+                $time += 2;
+                $return .= '<li><a class="wow fadeInUp" href="#" data-filter=".'.$e.'" data-wow-delay="0.'.$time.'s">'.ucfirst($e).'</a></li>';
+            }
+        }
+
+    }
+    $this->page["sortable"] = $return;
+    //print_r($data);
+}
+?>
+==
+{% if this.theme.block_work == '1' %}
+{% set fpWorks = this.theme.block_work_repeater %}
+<section class="module pb-0" id="works">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+                <h2 class="module-title font-alt">Our Works</h2>
+                <div class="module-subtitle font-serif"></div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <ul class="filter font-alt" id="filters">
+                    <li><a class="current wow fadeInUp" href="#" data-filter="*">All</a></li>
+                    {{ this.page.sortable|raw }}
+                </ul>
+            </div>
+        </div>
+        <ul class="works-grid works-grid-gut works-grid-3 works-hover-d" id="works-grid">
+            {% if fpWorks is not empty %}
+            {% for work in fpWorks %}
+            <li class="work-item {{ work.work_sortclass }}">
+                <a href="{{ work.work_link }}">
+                    <div class="work-image">
+                        <img src="{{ work.work_image|media }}" alt="{{ this.theme.block_work_title }}"/>
+                    </div>
+                    <div class="work-caption font-alt">
+                        <h3 class="work-title">{{ work.work_title }}</h3>
+                        <div class="work-descr">{{ work.work_subtitle }}</div>
+                    </div>
+                </a>
+            </li>
+            {% endfor %}
+            {% endif %}
+        </ul>
+    </div>
+</section>
+{% endif %}

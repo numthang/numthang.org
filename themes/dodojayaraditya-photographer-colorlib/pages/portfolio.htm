@@ -1,0 +1,44 @@
+title = "Portfolio"
+url = "/portfolio"
+layout = "default"
+is_hidden = 0
+
+[blogPosts]
+pageNumber = "{{ :page }}"
+postsPerPage = 23
+noPostsMessage = "No posts found"
+sortOrder = "published_at desc"
+categoryPage = "about"
+postPage = "blog-post"
+
+[blogCategories]
+slug = "{{ :slug }}"
+displayEmpty = 0
+categoryPage = "blog-category"
+==
+<!-- Portfolio section  -->
+<div class="portfolio-section">
+
+    <ul class="portfolio-filter controls text-center">
+        <li class="control" data-filter="all">All</li>
+        {% for category in categories %}
+        <li {% if category.slug == currentCategorySlug %} class="active control" {% endif %} data-filter=".{{ category.name }}">{{ category.name }}</li>
+        {% endfor %}
+    </ul>
+
+
+    <div class="row portfolio-gallery m-0">
+        {% for post in posts %}
+        {% for image in post.featured_images %}
+        {% for category in post.categories %}
+        <div class="mix col-xl-2 col-md-3 col-sm-4 col-6 p-0 {{ category.name }}">
+            <a href="{{ image.path }}" class="portfolio-item img-popup set-bg" data-setbg="{{ image.path }}"></a>
+        </div>
+        {% endfor %}
+        {% endfor %}
+        {% endfor %}
+    </div>
+
+
+</div>
+<!-- Portfolio section end  -->

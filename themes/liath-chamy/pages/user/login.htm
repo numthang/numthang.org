@@ -1,0 +1,22 @@
+title = "Login"
+url = "/account/login.htm"
+layout = "main"
+is_hidden = 0
+
+[Clake\UserExtended\Components\Account account]
+paramCode = "code"
+==
+<?php
+function onStart()
+{
+    $user = $this->account->user();
+    if($user)
+    {
+        return Redirect::to('/');
+    }
+}
+?>
+==
+<section class="module-small">
+{% partial 'account::login' %}
+</section>

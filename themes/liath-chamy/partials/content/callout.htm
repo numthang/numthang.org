@@ -1,0 +1,23 @@
+description = "Section Callout"
+
+[viewBag]
+==
+{% if this.theme.block_callout == '1' %}
+<section class="module-small bg-dark">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 col-md-8 col-lg-6 col-lg-offset-2">
+                <div class="callout-text font-alt">
+                    <h3 class="callout-title">{{ this.theme.callout_title }}</h3>
+                    <p>{{ this.theme.callout_subtitle }}</p>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-2">
+                <div class="callout-btn-box">
+                <a class="btn btn-w btn-round" href="{{ this.theme.callout_linktarget }}">{{ this.theme.callout_linkname }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}

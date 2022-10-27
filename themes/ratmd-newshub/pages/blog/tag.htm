@@ -1,0 +1,61 @@
+url = "/magazine/tag/:slug/:page?"
+layout = "default"
+title = "Tag Archive"
+description = "Magazine - Tag Archive"
+meta_title = "Tag Archive"
+meta_description = "NewsHub provides an own archive page for your Blog / Magazine tags."
+
+[viewBag]
+localeUrl[de] = "/magazin/schlagwort/:slug/:page?"
+localeTitle[de] = "Schlagwort Archiv"
+localeMeta_title[de] = "Schlagwort Archiv"
+localeMeta_description[de] = "NewsHub bietet eine eigene Archivseite für deine Blog / Magazin Schlagwörter."
+
+[bloghubPostsByTag]
+pageNumber = "{{ :page }}"
+postsPerPage = 10
+noPostsMessage = "No posts found"
+sortOrder = "published_at desc"
+categoryPage = "blog/category"
+postPage = "blog/post"
+tagFilter = "{{ :slug }}"
+==
+<?php
+function onEnd()
+{
+    if (!empty($this->tag)) {
+        $this->page->title .= ': ' . (!empty($this->tag->title)? $this->tag->title: $this->tag->slug);
+        
+        if ($this->page->meta_title) {
+            $this->page->meta_title .= ': ' . (!empty($this->tag->title)? $this->tag->title: $this->tag->slug);
+        }
+    }
+
+    if (!empty ($this->tags)) {
+        $titles = array_map(fn($item) => !empty($item->title)? $item->title: $item->slug, $this->tags);
+        $this->page->title .= ': ' . implode(', ', $titles);
+        
+        if ($this->page->meta_title) {
+            $this->page->meta_title .= ': ' . implode(', ', $titles);
+        }
+        $this['tags_title'] = implode(', ', $titles);
+    }
+}
+?>
+==
+<section class="section section-posts py-6">
+    <div class="container">
+        <h1 class="mb-5">{{ 'archive.tag_archive' | _ }}: {{ tags_title | default(tag.title) }}</h1>
+
+        {% if posts|length > 0 %}
+            {% partial 'blog/sections/posts-list' 
+                posts=posts
+                prefix='tag-archiv'
+                datetime='short'
+            %}
+            {% partial 'blog/components/pagination' posts=posts %}
+        {% else %}
+            {% partial 'blog/components/empty' %}
+        {% endif %}
+    </div>
+</section>

@@ -1,0 +1,70 @@
+title = "Contact"
+url = "/contact"
+layout = "default"
+is_hidden = 0
+
+[LaminSanneh\FlexiContact\Components\ContactForm contactForm]
+injectBootstrapAssets = 1
+injectMainScript = 1
+==
+<!-- Google Map -->
+{% if this.theme.googlemap_contact_page %}
+<div class="map">
+    <iframe src="{{ this.theme.contact_maps }}" style="border:0" allowfullscreen></iframe>
+</div>
+{% endif %}
+<!-- Google Map end -->
+
+<!-- Contact section  -->
+<section class="contact-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="contact-text">
+                    <h3>{{ this.theme.contact_headline | raw }}</h3>
+                    <p>{{ this.theme.contact_text }}</p>
+                    <ul>
+                        <li>{{ this.theme.contact_addr1 }} <br>{{ this.theme.contact_addr2 }}</li>
+                        <li>{{ this.theme.contact_phone }}</li>
+                        <li>{{ this.theme.contact_email }}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="confirm-container">
+                    <!--This will contain the confirmation when the email is successfully sent-->
+                </div>
+                <form class="flexiContactForm" role="form" data-request="{{ __SELF__ }}::onMailSent"
+                    data-request-update="'{{ __SELF__ }}::confirm': '.confirm-container'">
+                
+                    <div class="form-groups">
+                        <div class="form-group">
+                            <input type="text" class="form-control" value="" name="name" placeholder="Enter name">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" value="" name="email" placeholder="Enter Email">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" value="" name="subject" placeholder="Enter Subject">
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" value="" name="body" placeholder="Enter Message" cols="30"
+                                rows="10"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-lg pull-right">Send</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Contact section end  -->
+
+<!-- Instagram section -->
+{% if this.theme.instafeed_contact_page %}
+<div class="instagram-section">
+    <h6>Instagram Feed</h6>
+    <div id="instafeed" class="instagram-slider owl-carousel"></div>
+</div>
+{% endif %}
+<!-- Instagram section end -->

@@ -1,0 +1,39 @@
+name: 'Footer menu'
+items:
+    -
+        title: Disclaimer
+        nesting: '0'
+        type: static-page
+        url: ''
+        code: ''
+        reference: disclaimer
+        cmsPage: ''
+        replace: '0'
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+    -
+        title: Support
+        nesting: ''
+        type: cms-page
+        url: ''
+        code: ''
+        reference: support
+        cmsPage: ''
+        replace: ''
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+    -
+        title: 'Lorem Ipsum'
+        nesting: '0'
+        type: static-page
+        code: ''
+        reference: lorem-ipsum
+        replace: '0'
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'

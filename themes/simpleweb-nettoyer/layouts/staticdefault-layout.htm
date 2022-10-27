@@ -1,0 +1,49 @@
+description = "Default layout"
+
+[staticPage]
+==
+<!DOCTYPE html>
+<html lang="{{ this.theme.site_lang }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{{ this.page.title }} | {{ this.theme.site_name }}</title>
+        <meta name="description" content="{{ this.page.meta_description }}">
+        <meta name="title" content="{{ this.page.meta_title }}">
+        <link rel="icon" type="image/png" href="{{ 'assets/images/october.png'|theme }}" />
+        <link href="{{ [
+            'assets/css/uikit.css',
+            'assets/css/style.css',
+            'assets/css/animate.min.css'
+        ]|theme }}" rel="stylesheet">
+        {% styles %}
+    </head>
+    <body>
+        {variable name="pagetitle" label="Page Title" tab="Page Header" type="text"}{/variable}
+        {variable name="pagedescription" label="Page Description" tab="Page Header" type="text"}{/variable}
+		<!-- Header Banner with Navigation -->
+        {% partial "main-layout/header" %}
+        
+        {% partial "main-layout/staticpage-header" %}<!-- Displays custom variables -->
+
+        <div class="uk-container uk-container-center uk-margin-large-top uk-margin-large-bottom"> <!-- Main Content -->
+            {% page %}
+        </div>
+        <!-- Footer -->
+        {% partial "main-layout/footer" %}
+
+
+        <!-- Google Fonts -->
+        <link href='https://fonts.googleapis.com/css?family=Lato:400,300,700' rel='stylesheet' type='text/css'>
+        <!-- Scripts -->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script src="{{ [
+          '@framework',
+          '@framework.extras',
+          'assets/js/uikit.min.js',
+          'assets/js/components/sticky.min.js',
+          'assets/js/app.js'
+        ]|theme }}"></script>
+        {% scripts %}
+    </body>
+</html>

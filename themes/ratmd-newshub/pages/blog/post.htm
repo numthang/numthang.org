@@ -1,0 +1,58 @@
+url = "/magazine/post/:slug"
+layout = "default"
+title = "Single Post"
+description = "Magazine - Single Post"
+
+[viewBag]
+localeUrl[de] = "/magazin/beitrag/:slug"
+localeTitle[de] = "Einzelner Beitrag"
+
+[blogPost]
+slug = "{{ :slug }}"
+categoryPage = "blog/category"
+
+[bloghubCommentSection]
+commentsPerPage = 10
+sortOrder = "created_at DESC"
+commentHierarchy = 1
+commentsAnchor = "comments"
+pinFavorites = 0
+hideOnDislikes = 0
+formPosition = "above"
+disableForm = 0
+==
+<?php
+function onEnd()
+{
+    if (!empty($this->post)) {
+        $this->page->title = $this->post->title;
+        $this->page->meta_title = $this->post->title;
+        $this->page->meta_description = !empty($this->post->excerpt)? $this->post->excerpt: strip_tags($this->post->summary);
+
+        if ($this->post->user) {
+            $this['newshub'] = [
+                "meta_author" => $this->post->user->bloghub_display(),
+                "meta_keywords" => implode(', ', $this->post->ratmd_bloghub_tags->map(fn ($el) => $el['slug'])->all())
+            ];
+        }
+
+        $layout = $this->post->ratmd_bloghub_meta->where('name', 'layout')->first()['value'] ?? 'default';
+        if ($layout === 'heroimage') {
+            $this['bodyClasses'] = 'overlay-navbar';
+        }
+    } else {
+        $this->setStatusCode(404);
+        return $this->controller->run('404');
+    }
+}
+?>
+==
+{% set layout = post.ratmd_bloghub_meta_data.layout | default('default') %}
+
+<div class="post-single post-layout-{{ layout }}">
+    {% if layout != '' and layout != 'default' and hasPartial('blog/post-single-' ~ layout) %}
+        {% partial ('blog/post-single-' ~ layout) post=post %}
+    {% else %}
+        {% partial ('blog/post-single') post=post %}
+    {% endif %}
+</div>

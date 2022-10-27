@@ -1,0 +1,302 @@
+items:
+    -
+        title: Home
+        nesting: null
+        type: cms-page
+        url: null
+        code: ''
+        reference: home
+        cmsPage: null
+        replace: null
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+    -
+        title: Magazine
+        nesting: null
+        type: cms-page
+        url: null
+        code: ''
+        reference: magazine
+        cmsPage: null
+        replace: null
+        viewBag:
+            locale:
+                de:
+                    title: ''
+                    url: ''
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+        items:
+            -
+                title: 'Example Archives'
+                nesting: null
+                type: header
+                url: null
+                code: ''
+                reference: null
+                cmsPage: null
+                replace: null
+                viewBag:
+                    locale:
+                        de:
+                            title: ''
+                            url: ''
+                    isHidden: '0'
+                    cssClass: ''
+                    isExternal: '0'
+                items:
+                    -
+                        title: 'Author Archive'
+                        nesting: null
+                        type: url
+                        url: /magazine/author/sam
+                        code: ''
+                        reference: null
+                        cmsPage: null
+                        replace: null
+                        viewBag:
+                            locale:
+                                de:
+                                    title: ''
+                                    url: ''
+                            isHidden: '0'
+                            cssClass: ''
+                            isExternal: '0'
+                    -
+                        title: 'Category Archive'
+                        nesting: 0
+                        type: blog-category
+                        url: null
+                        code: ''
+                        reference: '1'
+                        cmsPage: blog/category
+                        replace: 0
+                        viewBag:
+                            locale:
+                                de:
+                                    title: ''
+                                    url: ''
+                            isHidden: '0'
+                            cssClass: ''
+                            isExternal: '0'
+                    -
+                        title: 'Date Archive'
+                        nesting: null
+                        type: url
+                        url: /magazine/date/2022-08
+                        code: ''
+                        reference: null
+                        cmsPage: null
+                        replace: null
+                        viewBag:
+                            locale:
+                                de:
+                                    title: ''
+                                    url: ''
+                            isHidden: '0'
+                            cssClass: ''
+                            isExternal: '0'
+                    -
+                        title: 'Tag Archive'
+                        nesting: null
+                        type: url
+                        url: /magazine/tag/demonstration
+                        code: ''
+                        reference: null
+                        cmsPage: null
+                        replace: null
+                        viewBag:
+                            locale:
+                                de:
+                                    title: ''
+                                    url: ''
+                            isHidden: '0'
+                            cssClass: ''
+                            isExternal: '0'
+            -
+                title: 'Example Articles'
+                nesting: null
+                type: header
+                url: null
+                code: ''
+                reference: null
+                cmsPage: null
+                replace: null
+                viewBag:
+                    locale:
+                        de:
+                            title: ''
+                            url: ''
+                    isHidden: '0'
+                    cssClass: ''
+                    isExternal: '0'
+                items:
+                    -
+                        title: 'Default Article'
+                        nesting: null
+                        type: blog-post
+                        url: null
+                        code: ''
+                        reference: '3'
+                        cmsPage: blog/post
+                        replace: null
+                        viewBag:
+                            locale:
+                                de:
+                                    title: ''
+                                    url: ''
+                            isHidden: '0'
+                            cssClass: ''
+                            isExternal: '0'
+                    -
+                        title: 'Fullwidth Article'
+                        nesting: null
+                        type: blog-post
+                        url: null
+                        code: ''
+                        reference: '8'
+                        cmsPage: blog/post
+                        replace: null
+                        viewBag:
+                            locale:
+                                de:
+                                    title: ''
+                                    url: ''
+                            isHidden: '0'
+                            cssClass: ''
+                            isExternal: '0'
+                    -
+                        title: 'Gallery Article'
+                        nesting: null
+                        type: blog-post
+                        url: null
+                        code: ''
+                        reference: '7'
+                        cmsPage: blog/post
+                        replace: null
+                        viewBag:
+                            locale:
+                                de:
+                                    title: ''
+                                    url: ''
+                            isHidden: '0'
+                            cssClass: ''
+                            isExternal: '0'
+                    -
+                        title: 'Carousel Article'
+                        nesting: null
+                        type: blog-post
+                        url: null
+                        code: ''
+                        reference: '10'
+                        cmsPage: blog/post
+                        replace: null
+                        viewBag:
+                            locale:
+                                de:
+                                    title: ''
+                                    url: ''
+                            isHidden: '0'
+                            cssClass: ''
+                            isExternal: '0'
+                    -
+                        title: 'Hero Article'
+                        nesting: null
+                        type: blog-post
+                        url: null
+                        code: ''
+                        reference: '9'
+                        cmsPage: blog/post
+                        replace: null
+                        viewBag:
+                            locale:
+                                de:
+                                    title: ''
+                                    url: ''
+                            isHidden: '0'
+                            cssClass: ''
+                            isExternal: '0'
+    -
+        title: Features
+        nesting: null
+        type: cms-page
+        url: null
+        code: ''
+        reference: features
+        cmsPage: null
+        replace: null
+        viewBag:
+            locale:
+                de:
+                    title: ''
+                    url: ''
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+        items:
+            -
+                title: 'HTML Unit'
+                nesting: null
+                type: cms-page
+                url: null
+                code: ''
+                reference: bootstrap/unit
+                cmsPage: null
+                replace: null
+                viewBag:
+                    locale:
+                        de:
+                            title: ''
+                            url: ''
+                    isHidden: '0'
+                    cssClass: ''
+                    isExternal: '0'
+            -
+                title: Components
+                nesting: null
+                type: cms-page
+                url: null
+                code: ''
+                reference: bootstrap/components
+                cmsPage: null
+                replace: null
+                viewBag:
+                    locale:
+                        de:
+                            title: ''
+                            url: ''
+                    isHidden: '0'
+                    cssClass: ''
+                    isExternal: '0'
+    -
+        title: 'Page Builder'
+        nesting: 1
+        type: static-page
+        code: ''
+        reference: page-builder
+        replace: 0
+        viewBag:
+            locale:
+                de:
+                    title: ''
+                    url: ''
+            isHidden: '0'
+            cssClass: columns-2
+            isExternal: '0'
+    -
+        title: Contact
+        nesting: null
+        type: url
+        url: /contact
+        code: ''
+        reference: null
+        cmsPage: null
+        replace: null
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+name: 'Main Menu'

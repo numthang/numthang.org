@@ -1,0 +1,51 @@
+url = "/magazine/author/:slug/:page?"
+layout = "default"
+title = "Author Archive"
+description = "Magazine - Author Archive"
+meta_title = "Author Archive"
+meta_description = "NewsHub provides an own archive page for your Blog / Magazine authors."
+
+[viewBag]
+localeUrl[de] = "/magazin/autor/:slug/:page?"
+localeTitle[de] = "Autor Archiv"
+localeMeta_title[de] = "Autor Archiv"
+localeMeta_description[de] = "NewsHub bietet eine eigene Archivseite für deine Blog / Magazin Autoren."
+
+[bloghubPostsByAuthor]
+pageNumber = "{{ :page }}"
+postsPerPage = 10
+noPostsMessage = "No posts found"
+sortOrder = "published_at desc"
+categoryPage = "blog/category"
+postPage = "blog/post"
+authorFilter = "{{ :slug }}"
+==
+<?php
+function onEnd()
+{
+    if (!empty($this->author)) {
+        $this->page->title .= ': ' . $this->author->bloghub_display();
+        
+        if ($this->page->meta_title) {
+            $this->page->meta_title .= ': ' . $this->author->bloghub_display();
+        }
+    }
+}
+?>
+==
+<section class="section section-posts py-6">
+    <div class="container">
+        <h1 class="mb-5">{{ 'archive.author_archive' | _ }}: {{ author.bloghub_display() }}</h1>
+
+        {% if posts|length > 0 %}
+            {% partial 'blog/sections/posts-list' 
+                posts=posts
+                prefix='archiv'
+                datetime='short'
+            %}
+            {% partial 'blog/components/pagination' posts=posts %}
+        {% else %}
+            {% partial 'blog/components/empty' %}
+        {% endif %}
+    </div>
+</section>

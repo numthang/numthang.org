@@ -1,0 +1,15 @@
+<div class="double-click" data-rat-toggle="double-click">
+    <div class="double-click-title">
+        {{ privacy_title | default('Third-Party Service') | raw }}
+    </div>
+    <div class="double-click-description">
+        {{ privacy_description | default("This content is hosted on a different website, which may sets cookies. Click on the button below, when you're cool with that.") | raw }}
+    </div>
+    <button type="button" class="double-click-button">
+        {{ privacy_button_label | default('Accept Cookies & Load Content') | raw }}
+    </button>
+
+    <template class="double-click-content">
+        {{ external_content | raw }}
+    </template>
+</div>

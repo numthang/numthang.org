@@ -1,0 +1,36 @@
+<script>
+    $(document).ready(function(){
+        
+        $(".field-repeater-items li").addClass("collapsed");
+        $("#Form-field-ThemeData-main_slider-group").css("display", "none");
+        
+        var header = $("#Form-field-ThemeData-frontend_header_type").val();
+        if (header === 'slideshow') {
+            var $active = $("#Form-field-ThemeData-main_slider-group");    
+        } else if (header === 'image') {
+            var $active = $("#Form-field-ThemeData-main_image-group");    
+        } else if (header === 'video') {
+            var $active = $("#Form-field-ThemeData-main_video-group");    
+        } else {
+            var $active = false;
+        }
+        
+        $(".form_container").hide();
+        $active.show();
+        
+        $("#Form-field-ThemeData-frontend_header_type").on("change", function(e){
+            var header = $(this).val();            
+            
+            if (header === 'slideshow') {
+                var $active = $("#Form-field-ThemeData-main_slider-group");    
+            } else if (header === 'image') {
+                var $active = $("#Form-field-ThemeData-main_image-group");    
+            } else if (header === 'video') {
+                var $active = $("#Form-field-ThemeData-main_video-group");    
+            }
+            
+            $(".form_container").hide();
+            $active.delay(400).fadeIn("slow");        
+        });
+    });
+</script>

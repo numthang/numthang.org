@@ -1,0 +1,44 @@
+description = "Footer"
+
+[viewBag]
+==
+<?php
+function onStart() {
+    $this->page["date"] = date("Y", time());
+}
+?>
+==
+<footer class="footer bg-dark">
+    <div style="margin: 0 50px;">
+        <div class="row">
+            <div class="col-sm-6">
+                <p class="copyright font-alt">&copy; {{ this.page.date }} <a href="index.html">{{ this.theme.company_name }}</a>, All Rights Reserved</p>
+            </div>
+            <div class="col-sm-6">
+                <div class="footer-social-links">
+                
+                {% if this.theme.social_facebook is not empty %}
+                <a href="{{ this.theme.social_facebook }}"><i class="fa fa-facebook"></i></a>
+                {% endif %}
+                
+                {% if this.theme.social_twitter is not empty %}
+                <a href="{{ this.theme.social_twitter }}"><i class="fa fa-twitter"></i></a>
+                {% endif %}
+                
+                {% if this.theme.social_instagram is not empty %}
+                <a href="{{ this.theme.social_instagram }}"><i class="fa fa-instagram"></i></a>
+                {% endif %}
+                
+                {% if this.theme.social_linkedin is not empty %}
+                <a href="{{ this.theme.social_linkedin }}"><i class="fa fa-linkedin"></i></a>
+                {% endif %}
+                
+                {% if this.theme.social_pinterest is not empty %}
+                <a href="{{ this.theme.social_pinterest }}"><i class="fa fa-pinterest"></i></a>
+                {% endif %}
+                
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>

@@ -1,0 +1,53 @@
+name: NewsHub - Magazine Template
+description: 'A minimalistic and responsive blog and magazine template with page builder and dark mode, designed with Bootstrap 5.2.'
+author: rat.md
+homepage: 'https://rat.md'
+authorCode: RatMD
+code: newshub
+parent: ''
+database: '0'
+require:
+    - 'RainLab.Blog'
+    - 'RainLab.Pages'
+    - 'RainLab.Sitemap'
+    - 'RainLab.Translate'
+    - 'RatMD.BlogHub'
+form: config/options.yaml
+translate: config/lang.yaml
+
+ratmd.bloghub:
+    post:
+        simple_subtitle:
+            type: text
+            tab: theme.newshub::lang.custom_meta.tab
+            label: theme.newshub::lang.custom_meta.simple_subtitle.title
+            comment: theme.newshub::lang.custom_meta.simple_subtitle.comment
+            span: left
+        simple_title:
+            type: text
+            tab: theme.newshub::lang.custom_meta.tab
+            label: theme.newshub::lang.custom_meta.simple_title.label
+            comment: theme.newshub::lang.custom_meta.simple_title.comment
+            span: right
+        layout:
+            type: dropdown
+            tab: theme.newshub::lang.custom_meta.tab
+            label: theme.newshub::lang.custom_meta.post_layout.label
+            comment: theme.newshub::lang.custom_meta.post_layout.comment
+            default: default
+            showSearch: false
+            options:
+                default: theme.newshub::lang.custom_meta.post_layout.default
+                fullwidth: theme.newshub::lang.custom_meta.post_layout.fullwidth
+                heroimage: theme.newshub::lang.custom_meta.post_layout.heroimage
+        images:
+            type: dropdown
+            tab: theme.newshub::lang.custom_meta.tab
+            label: theme.newshub::lang.custom_meta.images.label
+            comment: theme.newshub::lang.custom_meta.images.comment
+            default: default
+            showSearch: false
+            options:
+                carousel: theme.newshub::lang.custom_meta.images.carousel
+                gallery: theme.newshub::lang.custom_meta.images.gallery
+                hidden: theme.newshub::lang.custom_meta.images.hidden

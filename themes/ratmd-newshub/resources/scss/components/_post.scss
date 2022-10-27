@@ -1,0 +1,236 @@
+
+// ----------------------------------------
+//  SinglePost Stylings
+// ----------------------------------------
+
+.post-single {
+    header {
+        @include media-breakpoint-up(xl) {
+            max-height: 240px;
+        }
+    
+        .container {
+            display: flex;
+            flex-direction: column;
+            
+            @include media-breakpoint-up(xl) {
+                flex-direction: row;
+            }
+
+            .post-header {
+                order: 2;
+                flex: 0 0 100%;
+                padding: $spacer * 2 0;
+
+                @include media-breakpoint-up(xl) {
+                    order: 1;
+                    padding: 0;
+                }
+                &.post-has-thumbnail {
+                    flex: 1 1 auto;
+                }
+            }
+
+            .post-published {
+                color: var(--#{$prefix}body-color);
+                opacity: 0.5;
+                font-weight: 600;
+            }
+
+            .post-thumbnail {
+                order: 1;
+                flex: 0 0 100%;
+                width: auto;
+                height: auto;
+
+                @include media-breakpoint-up(xl) {
+                    order: 2;
+                    flex: 0 0 400px;
+                    width: 400px;
+                    margin-top: -5rem;
+                }
+
+                img {
+                    width: 100%;
+                    max-height: 400px;
+                    object-fit: cover;
+                    object-position: top;
+
+                    @include media-breakpoint-up(md) {
+                        max-height: 600px;
+                    }
+                    
+                    @include media-breakpoint-up(xl) {
+                        max-height: 400px;
+                    }
+                }
+            }
+        }
+    }
+
+    article {
+        .container {
+            display: flex;
+
+            .post-content {
+                flex: 1 1 auto;
+                font-size: 1.0rem;
+                max-width: 100%;
+
+                h1,
+                h2,
+                h3,
+                h4,
+                h5,
+                h6 {
+                    margin-top: $spacer;
+                    margin-bottom: $spacer * 0.75;
+                    font-weight: 500;
+
+                    .display-1,
+                    .display-2,
+                    .display-3,
+                    .display-4,
+                    .display-5,
+                    .display-6 {
+                        font-weight: 700;
+                    }
+                }
+
+                & > p,
+                & > ul,
+                & > ol ,
+                & > blockquote,
+                & > address,
+                & > table {
+                    margin-bottom: $spacer * 3;
+                }
+
+                & > p:first-child {
+                    font-size: 1.1rem;
+                    line-height: 2.1rem;
+                    font-weight: 400;
+                }
+            }
+            
+            aside {
+                margin-bottom: $spacer * 3;
+                
+                @include media-breakpoint-up(xl) {
+                    margin-bottom: 0;
+
+                    &.post-has-thumbnail {
+                        padding-top: 160px;
+                    }
+                }
+            }
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+        }
+    }
+}
+
+
+// ----------------------------------------
+//  HeroImage Post Stylings
+// ----------------------------------------
+
+.post-single.post-layout-heroimage {
+    .section-posts > header {
+        height: 100vh;
+        max-height: none;
+        display: flex;
+        align-items: flex-end;
+        justify-content: flex-end;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: top center;
+
+        .container {
+            display: flex;
+            position: relative;
+            justify-content: flex-start;
+
+            &::before {
+                top: 0;
+                left: -50vw;
+                right: calc(100% - (var(--bs-gutter-x)*.5));
+                bottom: 0;
+                content: "";
+                display: block;
+                position: absolute;
+                background-color: rgba(0, 0, 0, 0.75);
+            }
+        }
+
+        .post-header {
+            flex: 0 0 auto;
+            width: auto;
+            padding: $spacer * 2;
+            padding-right: $spacer * 7.5;
+            text-align: left;
+            flex-direction: column;
+            background-color: rgba(0, 0, 0, 0.75);
+
+            .post-title,
+            .post-published {
+                width: auto;
+                color: $white;
+            }
+            .post-published {
+                opacity: 0.75;
+            }
+        }
+    }
+}
+
+
+// ----------------------------------------
+//  Post Button Stylings
+// ----------------------------------------
+
+.post-button {
+    display: flex;
+    text-decoration: none;
+
+    .post-thumbnail,
+    .post-no-thumbnail {
+        flex: 0 0 80px;
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        object-position: top;
+        border-radius: $border-radius;
+    }
+    .post-no-thumbnail {
+        background-color: $gray-300;
+
+        .dark & {
+            background-color: $gray-800;
+        }
+    }
+
+    .post-content {
+        flex: 1 1 auto;
+        padding: $spacer * 0.25 $spacer;
+    }
+
+    .post-title {
+        color: var(--#{$prefix}body-color);
+        font-size: 1.2rem;
+        line-height: 1.7rem;
+        font-family: $font-family-special;
+        background-image: linear-gradient(currentColor, currentColor);
+        background-position: 0% 100%;
+        background-repeat: no-repeat;
+        background-size: 0% 2px;
+        transition: background-size .3s ease;
+    }
+
+    &:hover .post-title {
+        background-size: 100% 2px;
+    }
+}

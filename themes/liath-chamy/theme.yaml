@@ -1,0 +1,6 @@
+name: Chamy
+code: chamy
+description: 'Chamy is the adaption of Titan from themewagon.'
+author: Liath
+homepage: 'http://amfearliath.tk'
+form: config/fields.yaml

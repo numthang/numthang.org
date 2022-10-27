@@ -1,0 +1,23 @@
+description = "Section Features"
+
+[viewBag]
+==
+{% if this.theme.block_features == '1' %}
+{% set fpFeatures = this.theme.block_features_repeater %}
+<section class="module" id="services">
+    <div class="container">
+        <div class="row multi-columns-row">
+            {% if fpFeatures is not empty %}
+            {% for feature in fpFeatures %}
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="features-item">
+                    <div class="features-icon"><span class="{{ feature.feature_icon }}"></span></div>
+                    <h3 class="features-title font-alt">{{ feature.feature_title }}</h3>{{ feature.feature_text|raw }}
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endif %}

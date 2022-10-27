@@ -1,0 +1,10 @@
+name: 'Photographer Colorlib'
+description: 'Multipurpose Theme for Portfolio, Corporate, Gallery, Agency, Blogging, Resume, etc. Basically, this is designed for Photografer, Bussiness, Creative Professional, Painting/Image Gallery & Product Showcase.'
+author: 'Dodo Jaya Raditya'
+homepage: www.singdisain.com
+code: photographer-colorlib
+form: fields.yaml
+
+require:
+  - rainlab.blog
+  - LaminSanneh.FlexiContact

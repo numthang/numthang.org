@@ -1,0 +1,76 @@
+[viewBag]
+
+[staticMenu footerMenu]
+code = "footer-menu"
+==
+==
+<footer id="footer">
+  <div class="uk-container uk-container-center">
+    <div class="uk-grid footer-middle">
+      <div class="uk-width-medium-1-3 uk-margin-top">
+        <h4 class="uk-h2">Support Links</h4>
+          {% if footerMenu.menuItems %}
+          <ul class="uk-list uk-list-space">
+            {% for item in footerMenu.menuItems %}
+            <li>
+              <a href="{{ item.url }}">{{ item.title }}</a>
+            </li>
+            {% if item.items %}
+              {% for childItem in item.items %}
+              <li>
+                <a href="{{ childItem.url }}">{{ childItem.title }}</a>
+              </li>
+              {% endfor %}
+            {% endif %}
+            {% endfor %}
+          </ul>
+          {% endif %}
+      </div>
+      <div class="uk-width-medium-1-3 uk-margin-top">
+        <h4 class="uk-h2">Follow us on</h4>
+        <ul class="uk-list uk-list-space">
+          <li>
+            <i class="uk-icon-justify uk-icon-button uk-icon-google-plus"></i>
+            <a class="uk-margin-left" href="{{ this.theme.google_plus_url }}" target="_blank">{{ this.theme.google_plus_id }}</a>
+          </li>
+          <li>
+            <i class="uk-icon-justify uk-icon-button uk-icon-twitter"></i>
+            <a class="uk-margin-left" href="{{ this.theme.twitter_url }}" target="_blank">{{ this.theme.twitter_id }}</a>
+          </li>
+          <li>
+            <i class="uk-icon-justify uk-icon-button uk-icon-facebook"></i>
+            <a class="uk-margin-left" href="{{ this.theme.facebook_url }}" target="_blank">{{ this.theme.facebook_id }}</a>
+          </li>
+          <li>
+            <i class="uk-icon-justify uk-icon-button uk-icon-envelope"></i>
+            <a class="uk-margin-left" href="{{ this.theme.contact_url }}" target="_blank">{{ this.theme.contact_text }}</a>
+          </li>
+        </ul>
+      </div>
+      <div class="uk-width-medium-1-3 uk-margin-top">
+        <h4 class="uk-h2">Get in touch</h4>
+        <ul class="uk-list uk-list-space">
+          <li>
+            <i class="uk-icon-justify uk-icon-button uk-icon-user"></i>
+            <span class="uk-margin-left">{{ this.theme.company_name }}</span>
+          </li>
+          <li>
+            <i class="uk-icon-justify uk-icon-button uk-icon-home"></i>
+            <span class="uk-margin-left">{{ this.theme.address_footer }}</span>
+          </li>
+          <li>
+            <i class="uk-icon-justify uk-icon-button uk-icon-phone"></i>
+            <span class="uk-margin-left">{{ this.theme.telephone_number }}</span>
+          </li>
+          <li>
+            <i class="uk-icon-justify uk-icon-button uk-icon-fax"></i>
+            <span class="uk-margin-left">{{ this.theme.fax_number }}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="copyright container">
+      <p>&copy; {{ "now"|date("Y") }} Your Company. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
