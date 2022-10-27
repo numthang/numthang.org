@@ -1,8 +1,0 @@
-{
-    "name": "zanor/mdbv4-theme",
-    "type": "october-theme",
-    "description": "None",
-    "require": {
-        "composer/installers": "~1.0"
-    }
-}
