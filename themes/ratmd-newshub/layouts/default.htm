@@ -53,8 +53,9 @@ function onInit()
     </script>
     {% partial 'page/header' %}
     <div id="pageContent">
-      {% page %}
+        {% page %}
     </div>
+    
     <footer id="pageFooter" class="{% if this.theme.dark_footer %}bg-dark dark{% else %}bg-light dark:bg-dark{% endif %} py-5">
         <div class="container">
             {% partial 'page/footer' %}
