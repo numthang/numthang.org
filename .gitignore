@@ -26,5 +26,11 @@ nbproject
 
 # Project
 /bootstrap/compiled.php
-/vendor
-/modules
+#/vendor
+#/modules
+
+#MINE (Commented vendor and modules)
+/config/database.php
+/config/mail.php
+/storage
+/sql
