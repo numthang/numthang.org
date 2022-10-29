@@ -1,0 +1,199 @@
+title = "User Profile"
+url = "/u/:id"
+layout = "default"
+meta_title = "User Profile"
+is_hidden = 0
+robot_index = "noindex"
+robot_follow = "nofollow"
+
+[session]
+security = "user"
+redirect = "login/login"
+
+[account]
+paramCode = "code"
+forceSecure = 0
+
+[builderDetails]
+modelClass = "RainLab\User\Models\User"
+identifierValue = "{{ :id }}"
+modelKeyColumn = "id"
+displayColumn = "username"
+notFoundMessage = "Record not found"
+
+[courses]
+results = 0
+byUserID = "{{ :id }}"
+sortOrder = "updated_at"
+
+[evaluations]
+results = 0
+byUserID = "{{ :id }}"
+sortOrder = "updated_at"
+
+[scopePosts]
+pageNumber = 1
+postsPerPage = 10
+noPostsMessage = "No posts found"
+sortOrder = "updated_at desc"
+categoryPage = "blog/category"
+postPage = "blog/post"
+backend = 0
+userID = "{{ :id }}"
+featured = 0
+drafted = 0
+from = "0000-00-00"
+to = "0000-00-00"
+evaluationID = 0
+ownerID = 0
+
+[scopePosts scopePosts2]
+pageNumber = 1
+postsPerPage = 10
+noPostsMessage = "No posts found"
+sortOrder = "published_at asc"
+categoryPage = "blog/category"
+postPage = "blog/post"
+backend = 0
+userID = "{{ :id }}"
+featured = 0
+drafted = 1
+from = "0000-00-00"
+to = "0000-00-00"
+evaluationID = 0
+ownerID = 0
+
+[scopePosts scopePosts3]
+pageNumber = "{{ :page }}"
+categoryFilter = "portfolio"
+postsPerPage = 5
+noPostsMessage = "No posts found"
+sortOrder = "created_at desc"
+categoryPage = "blog/category"
+postPage = "blog/post"
+backend = 0
+userID = "{{ :id }}"
+featured = 0
+drafted = 0
+from = "0000-00-00"
+to = "0000-00-00"
+evaluationID = 0
+ownerID = 0
+==
+<?php
+  function onEnd() {
+    $this->page->custom_title = $this->record->name.' '.$this->record->surname;
+  }
+?>
+==
+{%  set student_evaluations = evaluations.student_evaluations %}
+{%  set courses = courses.courses %}
+{%  set student_courses = evaluations.student_courses %}
+{%  set evaluations = evaluations.evaluations %}
+<section id="layout-title">
+    <div class="container">
+      <div class="col-sm-12">
+        <h3><a href="/u/{{record.id}}">
+          {% partial 'user/avatar' id=record.id facebookID=record.facebook_id style='avatar' redirect=0 %}
+          </a> {{ record.name }} {{ record.surname }}</h3>
+      </div>
+    </div>
+</section>
+<div class="container">
+  <div class="row">
+    <div class="col-md-7">
+      <h4>{{ 'About'|_ }}</h4>
+      <p>{{ record.note|raw }}</p>
+      <h4><a href="/blog/author/{{ record.id }}">{{ 'Latest posts'|_ }}</a></h4>
+      <p>
+        {% if scopePosts.posts %}
+          {% for Post in scopePosts.posts %}
+          <span class="fa fa-fw" aria-hidden="true">&#xf040;</span> <a href="{{Post.url}}">{{ Post.title }}</a>{% if Post.author.id == user.id %}
+              <a href="/edit/post/{{ Post.slug }}"> {{ 'Edit'|_ }}</a>
+            {% endif %}<br>
+          {% endfor %}
+        {% else %}
+          {{ 'No posts found'|_ }}
+        {% endif %}
+      </p>
+      <h4>{{ 'Drafted posts'|_ }}</h4>
+      <p>
+        {% if scopePosts2.posts %}
+          {% for Post in scopePosts2.posts %}
+          <span class="fa fa-fw" aria-hidden="true">&#xf040;</span><a href="{{Post.url}}">{{ Post.title }}</a>{% if Post.author.id == user.id %}
+              <a href="/edit/post/{{ Post.slug }}"> {{ 'Edit'|_ }}</a>
+            {% endif %}<br>
+          {% endfor %}
+        {% else %}
+          {{ 'No posts found'|_ }}
+        {% endif %}
+      </p>
+      <h4><a href="/portfolio/{{record.id}}">{{ 'Portfolios'|_ }}</a></h4>
+      <p>
+        {% if scopePosts3.posts %}
+          {% for Post in scopePosts3.posts %}
+          <span class="fa fa-fw" aria-hidden="true">&#xf040;</span><a href="{{Post.url}}">{{ Post.title }}</a>{% if Post.author.id == user.id %}
+              <a href="/edit/post/{{ Post.slug }}"> {{ 'Edit'|_ }}</a>
+            {% endif %}<br>
+          {% endfor %}
+        {% else %}
+          {{ 'No posts found'|_ }}
+        {% endif %}
+      </p>
+      {% if record.id == user.id  or can('edit_course_template') %}
+        <h4><a href="/add/course">{{ 'Course'|_ }}</a></h4>
+        <p>
+          {% for c in courses %}
+            {% if c.template != 1 %}
+            <span class="fa fa-fw" aria-hidden="true">&#xf0f6;</span> <a href="/course/{{ c.created_at|date('U') }}" title="{{ c.id }}">{{ c.name }}</a> <br>
+            {% endif %}
+          {% endfor %}
+          {% for e in student_courses %}
+          <span class="fa fa-fw" aria-hidden="true">&#xf0f6;</span><a href="/course/{{ e.course.created_at|date('U') }}" title="{{ c.id }}">{{ e.course.name }}</a><br>
+          {% endfor %}
+        </p>
+        <h4><a href="/add/evaluation">{{ 'Evaluation'|_ }}</a></h4>
+        <p>
+          {% for e in evaluations %}
+            {% if e.template != 1 %}
+            <span class="fa fa-fw" aria-hidden="true">&#xf1c5;</span>
+            <a href="/evaluation/{{ e.created_at|date('U') }}" title="{{ e.id }}">{{ e.name }}</a> (<a href="/reportfolio/{{ e.created_at|date('U') }}">{{ 'portfolio'|_ }}</a>) <br>
+            {% endif %}
+          {% endfor %}
+          {% for e in student_evaluations %}
+            <span class="fa fa-fw" aria-hidden="true">&#xf1c5;</span>
+            <a href="/evaluation/{{ e.created_at|date('U') }}" title="{{ e.id }}">{{ e.name }}</a> (<a href="/reportfolio/{{ e.created_at|date('U') }}">{{ 'portfolio'|_ }}</a>)<br>
+          {% endfor %}
+        </p>
+      {% endif %}
+    </div>
+
+    <div class="col-md-5">
+        <div class="contact-banner">
+            <h3 class="banner-title">{{ 'Contact'|_ }}</h3>
+            <ul>
+                <li>{{ record.company }} </li>
+                <li>{{ record.street_addr }} {{ record.city }} {{ record.state.name }} {{ record.zip }}</li>
+                <li>{{ 'Mobile'|_ }}: โปรดติดต่อทางอีเมล์ Facebook หรือ LINE<!--{{ record.mobile }}--></li>
+                <li>{{ 'Phone'|_ }}: {{ record.phone }}</li>
+                <li>{{ 'Email'|_ }}: <a href="mail-to:{{ record.username }}">{% component 'builderDetails' %}</a></li>
+                <li>{{ 'Facebook'|_ }}: <a href="https://www.facebook.com/{{ record.facebook }}">{{ record.facebook }}</a></li>
+                <li>{{ 'Twitter'|_ }}: <a href="https://www.twitter.com/{{ record.twitter }}">{{ record.twitter }}</a></li>
+                <li>{{ 'Line'|_ }}: <a href="#">{{ record.line }}</a></li>
+            </ul>
+        </div>
+        <div class="google-maps">
+          <iframe
+            width="500"
+            height="450"
+            frameborder="0"
+            scrolling="no"
+            marginheight="0"
+            marginwidth="0"
+            src="https://maps.google.com/maps?q={{record.street_addr}}+{{record.zip}}&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
+        </div>
+
+    </div>
+  </div>
+</div>
+<br>

@@ -1,0 +1,31 @@
+title = "Tags"
+url = "/blog/tags"
+layout = "default"
+is_hidden = 0
+robot_index = "index"
+robot_follow = "follow"
+
+[tagList]
+displayEmpty = 1
+orderBy = "name asc"
+limit = 0
+enableTagFilter = "never"
+tagPage = 404
+tagsPage = 404
+==
+<section id="layout-title">
+    <div class="container">
+        <h3>{{ 'Tags'|_ }}</h3>
+    </div>
+</section>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      {% partial 'ads/central' id='Leaderboard in Content 1st' %}
+      {% for tag in tagList.tags %}
+        <a href="/blog/tagged/{{ tag.slug }}" style="font-size:{% if tag.posts|length > 30 %} {{ 50 }}{% else %}{{ tag.posts|length+16 }}{% endif %}px;">{{ tag.name }} ({{ tag.posts|length }})</a>,
+      {% endfor %}
+    </div>
+  </div>
+</div>

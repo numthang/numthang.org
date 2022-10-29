@@ -1,0 +1,55 @@
+title = "New post"
+url = "/add/:mod|^\bpost\b|\bportfolio\b$"
+layout = "default"
+is_hidden = 0
+robot_index = "index"
+robot_follow = "follow"
+
+[PostForm]
+use_authors = 1
+restrict_owner = 1
+backUser = 2
+allowpublish = 1
+show_excerpt = 1
+allow_images = 1
+slug = "{{ :slug }}"
+listPage = "blog/blog"
+postPage = "blog/post"
+
+[session]
+security = "user"
+redirect = "login/login"
+==
+<?php
+function onStart() {
+    use FireUnion\BlogFront\Models\Author as Author;
+    if($user = Auth::getUser()) {
+      $query = Author::where('user_id', '=', $user->id)->get();
+      if(!count($query)) {//if no author yet then register new author automatically
+        $author = new Author;
+        $author->user_id = $user->id;
+        $author->admin_id = 2;
+        $author->categories = ["2", "3", "1", "5", "6"];
+        $author->can_publish = 1;
+        $author->show_excerpt = 1;
+        $author->allow_images = 1;
+        $author->save();
+        return Redirect::to('/add/post');
+      }
+    }
+  }
+?>
+==
+<section id="layout-title">
+    <div class="container">
+      <h3>{% if this.param.mod == 'portfolio' %}{{ 'New portfolio'|_}}{% else %}{{ 'New post'|_ }}{% endif %}</h3>
+    </div>
+</section>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      {% partial 'login/post-form' user=user.id %}
+    </div>
+	</div>
+</div>
+<br>

@@ -1,0 +1,72 @@
+title = "Edit evaluation"
+url = "/edit/evaluation/:id"
+layout = "default"
+is_hidden = 0
+robot_index = "index"
+robot_follow = "follow"
+
+[viewBag]
+
+[evaluationform]
+
+[session]
+security = "user"
+redirect = "login/login"
+
+[courses]
+results = 0
+byUserID = 0
+sortOrder = "created_at"
+
+[evaluations]
+results = 0
+byUserID = 0
+sortOrder = "updated_at"
+==
+<?php
+public function onEnd() {
+  $course = $this->evaluationform->course;
+  if($course) {
+    $j = json_decode($course->attributes['father_profile']);
+    $this->page['father_name'] = $j->father_name;
+    $this->page['father_degree'] = $j->father_degree;
+    $this->page['father_exp'] = $j->father_exp;
+    $this->page['father_age'] = $j->father_age;
+    $this->page['father_job'] = $j->father_job;
+    $this->page['father_addr'] = $j->father_addr;
+    $this->page['father_contact'] = $j->father_contact;
+
+  	$j = json_decode($course->attributes['mother_profile']);
+    $this->page['mother_name'] = $j->mother_name;
+    $this->page['mother_degree'] = $j->mother_degree;
+    $this->page['mother_exp'] = $j->mother_exp;
+    $this->page['mother_age'] = $j->mother_age;
+    $this->page['mother_job'] = $j->mother_job;
+    $this->page['mother_addr'] = $j->mother_addr;
+    $this->page['mother_contact'] = $j->mother_contact;
+
+    $date = explode('-', $course->attributes['birth_date']);
+    $this->page['birth_date'] = $date[2].'/'.$date[1].'/'.$date[0];
+  }
+  if($this->evaluationform->record->attributes['evaluation_date']){
+    $date = explode('-', $this->evaluationform->record->attributes['evaluation_date']);
+    $this->page['graduated'] = $date[2].'/'.$date[1].'/'.$date[0];
+  }
+}
+?>
+==
+{%  set evaluation = evaluationform.record %}
+<section id="layout-title">
+  <div class="container">
+    <h3>{{ 'New evaluation'|_ }} : {{ evaluation.name }} </h3>
+  </div>
+</section>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      {% component 'evaluationform' %}
+	  </div>
+	</div>
+</div>
+<br>

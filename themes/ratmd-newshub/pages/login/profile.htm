@@ -1,0 +1,256 @@
+title = "Login Profile"
+url = "/edit/profile"
+layout = "default"
+is_hidden = 0
+robot_index = "index"
+robot_follow = "follow"
+
+[viewBag]
+
+[session]
+security = "user"
+redirect = "login/login"
+
+[account]
+paramCode = "code"
+forceSecure = 0
+
+[imageUploader]
+placeholderText = "Click or drag images to upload"
+maxSize = 5
+fileTypes = ".gif,.jpg,.jpeg,.png"
+imageWidth = 100
+imageHeight = 100
+imageMode = "crop"
+deferredBinding = 0
+
+[courses]
+results = 0
+byUserID = 0
+sortOrder = "name asc"
+==
+<?php
+  function onInit() {
+    use RainLab\User\Models\User;
+    $user = Auth::getUser();
+    $this->imageUploader->bindModel('avatar', User::find($user->id));
+}
+?>
+==
+<div class="container">
+  {% flash %}
+    <p data-control="flash-message" data-interval="5" class="{{ type == 'error' ? 'danger' : type }}">{{ message }}<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button></p>
+  {% endflash %}
+  {{ form_ajax('onUpdate', { 'autocomplete': 'off' }) }}
+  <div class="row">
+    <div class="col-sm-2">
+      <div style="padding: 20px 20px 0px 7px;">{% partial imageUploader ~ '::image-single' %}</div>
+    </div>
+    <div class="col-sm-10">
+      <h4>{{ user.name }} {{ user.surname }}</h4>
+      <h5>{{ user.company }}</h5>
+      <!--light : <input type="radio" name="theme" value="light">
+      dark : <input type="radio" name="theme" value="dark">-->
+      <input type="hidden" name="theme" value="light">
+      <input type="checkbox" name="theme" value="dark" data-toggle="switch" {% if user.theme == 'dark' %} checked {% endif %} > {{ 'Dark mode'|_ }} 
+    </div>
+  </div>
+  <br>
+  <div class="row">
+      <div class="col-md-12">
+           <div class="accordion">
+            <dl>
+              <dt><a class="accordionTitle accordionTitleActive" href="#"><i class="fui-user"></i> {{ 'Profile'|_ }}</a></dt>
+              <dd class="accordionItem ">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label>{{ 'First Name'|_ }}</label>
+                      <input name="name" type="text" class="form-control" value="{{ user.name }}">
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label>{{ 'Last Name'|_ }}</label>
+                      <input name="surname" type="text" class="form-control" value="{{ user.surname }}">
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label for="status">{{ 'Homeschooling status'|_ }}</label>
+                      <select class=" form-control" name="status" >
+                        <option value="1" {{ user.status == 1 ? 'selected' : '' }}>{{ 'Homeschooler'|_ }}</option>
+                        <option value="0" {{ user.status == 0 ? 'selected' : '' }}>{{ 'Interested in homschooling'|_ }}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label for="accountEmail">{{ 'Email'|_ }}</label>
+                      <input name="email" type="email" class="form-control" id="accountEmail" value="{{ user.email }}">
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label>{{ 'Facebook'|_ }}</label>
+                      <input name="facebook" type="text" class="form-control" value="{{ user.facebook }}">
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label>{{ 'Line'|_ }}</label>
+                      <input name="line" type="text" class="form-control" value="{{ user.line }}">
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label>{{ 'Website'|_ }}</label>
+                      <input name="website" type="text" class="form-control" value="{{ user.website }}">
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label>{{ 'Phone'|_ }}</label>
+                      <input name="phone" type="text" class="form-control" value="{{ user.phone }}">
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label>{{ 'Mobile'|_ }}</label>
+                      <input name="mobile" type="text" class="form-control" value="{{ user.mobile }}">
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label>{{ 'Twitter'|_ }}</label>
+                      <input name="twitter" type="text" class="form-control" value="{{ user.twitter }}">
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label>{{ 'Facebook ID'|_ }}</label>
+                      <input name="facebook_id" type="text" class="form-control" value="{{ user.facebook_id }}" readonly>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      
+                    </div>
+                  </div>
+                </div>
+              </dd>
+              <dt><a href="#" class="accordionTitle"><i class="fui-location"></i>{{ 'Address'|_ }} </a></dt>
+              <dd class="accordionItem">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label>{{ 'Company'|_ }}</label>
+                      <input name="company" type="text" class="form-control" value="{{ user.company }}">
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label>{{ 'Street Address'|_ }}</label>
+                      <input name="street_addr" type="text" class="form-control" value="{{ user.street_addr }}">
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label>{{ 'Zip'|_ }}</label>
+                      <input name="zip" type="text" class="form-control" value="{{ user.zip }}">
+                    </div>
+                  </div>
+                </div>
+                <div class="_ajax_location_select_wrapper">
+                  {% partial 'location/location-select' %}
+                </div>
+                <!--<div class="col-sm-3">
+                    <div class="form-group">
+                      <label>{{ 'City'|_ }}</label>
+                      <input name="city" type="text" class="form-control" value="{{ user.city }}">
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="{{ wrapper_class }} form-group">
+                      <label>{{ 'State'|_ }}</label>
+                      {{ form_select_state('state_id', user.country_id,  user.state_id, { id: 'state-select', class: class ~ ' form-control', emptyOption: placeholder }) }}
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label>{{ 'Zip'|_ }}</label>
+                      <input name="zip" type="text" class="form-control" value="{{ user.zip }}">
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="{{ wrapper_class }} form-group">
+                      <label>{{ 'Country'|_ }}</label>
+                      {{ form_select_country('country_id', user.country_id,
+                      {
+                        class: class ~ ' form-control',
+                        emptyOption: '-- SELECT COUNTRY --',
+                        'data-request': 'onChangeCountry',
+                        'data-request-data': {placeholder: '-- SELECT STATE --', name: 'country_id'},
+                      }) }}
+                    </div>
+                  </div>-->
+              </dd>
+              <!--<dt><a href="#" class="accordionTitle"><i class="fui-chat"></i> Contact</a></dt>
+              <dd class="accordionItem accordionItemCollapsed">
+                <div class="form-group">
+                  <label>Facebook</label>
+                  <input name="facebook" type="text" class="form-control" value="{{ user.facebook }}">
+                </div>
+                <div class="form-group">
+                  <label>Line</label>
+                  <input name="line" type="text" class="form-control" value="{{ user.line }}">
+
+                </div>
+                <div class="form-group">
+                  <label>Website</label>
+                  <input name="website" type="text" class="form-control" value="{{ user.website }}">
+                </div>
+              </dd>-->
+              <dt><a href="#" class="accordionTitle"><i class="fui-chat"></i> {{ 'Password'|_ }}</a></dt>
+              <dd class="accordionItem accordionItemCollapsed">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="accountPassword">{{ 'New Password'|_ }}</label>
+                        <input name="password" type="password" class="form-control" id="accountPassword" autocomplete="new-password">
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="accountPasswordConfirm">{{ 'Confirm New Password'|_ }}</label>
+                        <input name="password_confirmation" type="password" class="form-control" id="accountPasswordConfirm" autocomplete="new-password">
+                    </div>
+                  </div>
+                </div>
+              </dd>
+              <dt><a href="#" class="accordionTitle"><i class="fui-chat"></i> {{ 'About me'|_ }}</a></dt>
+              <dd class="accordionItem">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="{{ wrapper_class }} form-group">
+                      <label>{{ 'Description'|_ }}</label>
+                      <textarea name="note" class="form-control" style="line-height:1.8" rows="10">{{ user.note }}</textarea>
+                    </div>
+                  </div>
+                </div>
+              </dd>
+            </dl>
+          </div>
+          <script src="{{ ['assets/js/accordion.js']|theme }}"></script>
+          <div class="clearfix"></div>
+          <div class="row">
+            <div class="col-sm-6">
+              <button type="submit" class="btn btn-lg btn-info">Save</button>
+            </div>
+          </div>
+          <br>
+      </div>
+  </div>
+  {{ form_close() }}
+</div>
+<br>

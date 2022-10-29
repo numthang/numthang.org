@@ -1,0 +1,99 @@
+title = "Posts"
+url = "/blog/page/:page"
+layout = "default"
+meta_title = "บทความโฮมสคูล"
+meta_description = "รายการบทความในเกี่ยวกับโฮมสคูล"
+is_hidden = 0
+robot_index = "index"
+robot_follow = "follow"
+
+[blogPosts]
+pageNumber = "{{ :page }}"
+postsPerPage = 10
+noPostsMessage = "No posts found"
+sortOrder = "published_at desc"
+categoryPage = "blog/category"
+postPage = "blog/post"
+==
+<section id="layout-title">
+  <div class="container">
+      <h3>{{ 'Blog'|_ }}</h3>
+  </div>
+</section>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 col-md-3">
+      {% partial 'blog/sidebar' %}
+    </div>
+    <div class="col-sm-12 col-md-9">
+      {% set i = 0 %}
+      {% set posts = blogPosts.posts %}
+      {% for post in posts %}
+        <!-- Blog Post -->
+        <div class="blog">
+          {% partial 'user/avatar' id=post.author_id facebookID=post.author.facebook_id style='avatar' redirect=1 %}
+          <div class="blog-desc">
+            <h5><a href="{{ post.url }}">{{ post.title }}</a> {% if post.author.id == user.id %} <a href="/edit/post/{{ post.slug }}">{{ 'Edit'|_ }}</a> {% endif %}</h5>
+            <hr>
+            <p class="text-muted">by <a href="/u/{{post.author_id}}">{{ post.author.name }}</a> on {{ post.published_at|date('M d, Y') }}</p>
+            <p class="excerpt">{{ post.summary|raw }}</p>
+            {% if post.featured_images[0] %}
+              <a href="{{ post.url }}"><img class="img-responsive" src="{{ post.featured_images[0].path|resize(650, 650) }}" alt=""></a>
+            {% endif %}
+            <p class="info">
+              Posted
+              {% if post.categories.count %} in {% endif %}
+              {% for category in post.categories %}
+                  <a href="{{ category.url }}">{{ category.name }}</a>{% if not loop.last %}, {% endif %}
+              {% endfor %}
+            </p>
+            <a class="btn btn-lg btn-default" href="{{ post.url }}">{{ 'Read More'|_}} ...</a>
+          </div>
+        </div>
+        <!--{% set i = i + 1 %}
+        {% if i == 2 or i == 6 or i == 10 %}-->
+        {% partial 'ads/central' id='Leaderboard in Content 1st' %}
+        <!--{% endif %}-->
+      {% endfor %}
+      <!--<ul class="post-list">
+        {% for post in posts %}
+            <li>
+                <h5><a href="{{ post.url }}">{{ post.title }}</a></h5>
+
+                <p class="info">
+                    Posted
+                    {% if post.categories.count %} in {% endif %}
+                    {% for category in post.categories %}
+                        <a href="{{ category.url }}">{{ category.name }}</a>{% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                    on {{ post.published_at|date('M d, Y') }}
+                </p>
+
+                <p class="excerpt">{{ post.summary|raw }}</p>
+            </li>
+        {% else %}
+            <li class="no-data">{{ blogPosts.noPostsMessage }}</li>
+        {% endfor %}
+      </ul>-->
+
+      {% if posts.lastPage > 1 %}
+      <ul class="pagination">
+          {% if posts.currentPage > 1 %}
+            <li><a href="{{ this.page.baseFileName|page({ (blogPosts.pageParam): (posts.currentPage-1) }) }}">&larr; Prev</a></li>
+        {% endif %}
+
+        {% for page in 1..posts.lastPage %}
+            <li class="{{ posts.currentPage == page ? 'active' : null }}">
+                <a href="{{ this.page.baseFileName|page({ (blogPosts.pageParam): page }) }}">{{ page }}</a>
+            </li>
+        {% endfor %}
+
+        {% if posts.lastPage > posts.currentPage %}
+            <li><a href="{{ this.page.baseFileName|page({ (blogPosts.pageParam): (posts.currentPage+1) }) }}">Next &rarr;</a></li>
+          {% endif %}
+      </ul>
+      {% endif %}
+    </div>
+  </div>
+</div>

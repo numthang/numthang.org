@@ -1,0 +1,51 @@
+title = "Login"
+url = "/login"
+layout = "default"
+is_hidden = 0
+robot_index = "index"
+robot_follow = "follow"
+
+[account]
+redirect = "login/login"
+paramCode = "code"
+forceSecure = 0
+
+[session]
+security = "all"
+
+[resetPassword]
+paramCode = "code"
+
+[sociallogin]
+==
+<?php
+  function onStart() {
+    if(Auth::check()) {
+      header('Location:/edit/profile');
+      exit;
+    }
+    #$user = Auth::getUser();
+    #echo $user->name;
+  }
+?>
+==
+<div class="container">
+  <div class="row">
+  	{% flash %}
+      <p data-control="flash-message" data-interval="5" class="{{ type == 'error' ? 'danger' : type }}">{{ message }}<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button></p>
+    {% endflash %}
+    <div class="col-md-6">
+      <h3>{{ 'Log in'|_ }}</h3>
+      {% partial account ~ '::signin' %}
+      <a href="/flynsarmy/sociallogin/Facebook"><img src="{{ 'assets/images/fb-login.png'|theme }}" class="social-login"></a>
+      <a href="/flynsarmy/sociallogin/Google"><img src="{{ 'assets/images/g-login.png'|theme }}" class="social-login"></a>
+      <a href="/flynsarmy/sociallogin/Twitter"><img src="{{ 'assets/images/t-login.png'|theme }}" class="social-login"></a>
+      {% component 'sociallogin' %}<hr>
+      {% component 'resetPassword' %}
+    </div>
+    <div class="col-md-6">
+      {% partial account ~ '::register' %}
+    </div>
+  </div>
+</div>
+<br>
