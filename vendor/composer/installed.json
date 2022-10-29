@@ -2346,6 +2346,21 @@
             "install-path": "../justinrainbow/json-schema"
         },
         {
+            "name": "laminsanneh/flexicontact-plugin",
+            "version": "v1.3.4",
+            "version_normalized": "1.3.4.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://gateway.octobercms.com/composer/dist/laminsanneh/flexicontact-plugin/laminsanneh-flexicontact-plugin.zip"
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "type": "october-plugin",
+            "installation-source": "dist",
+            "install-path": "../../plugins/laminsanneh/flexicontact"
+        },
+        {
             "name": "laravel/framework",
             "version": "v9.37.0",
             "version_normalized": "9.37.0.0",
@@ -10321,21 +10336,6 @@
             "type": "october-theme",
             "installation-source": "dist",
             "install-path": "../../themes/zanor-mdbv4"
-        },
-        {
-            "name": "zanor/zanor-mdb-loaded-theme",
-            "version": "v1.0.2",
-            "version_normalized": "1.0.2.0",
-            "dist": {
-                "type": "zip",
-                "url": "https://gateway.octobercms.com/composer/dist/zanor/zanor-mdb-loaded-theme/zanor-zanor-mdb-loaded-theme.zip"
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "type": "october-theme",
-            "installation-source": "dist",
-            "install-path": "../../themes/zanor-zanor-mdb-loaded"
         }
     ],
     "dev": true,
