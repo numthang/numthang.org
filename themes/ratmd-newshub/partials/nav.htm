@@ -1,0 +1,151 @@
+[viewBag]
+
+[blogCategories]
+slug = "{{ :slug }}"
+displayEmpty = 0
+categoryPage = "blog/category"
+
+==
+<!--{# Note: Only one levels of sublinks are supported by Bootstrap 3 #}
+{% set
+    links = {
+        'home': ['home', 'Home'],
+        'blog': {
+            name: 'Blog',
+            sublinks: {
+                'Blog': ['blog/blog', 'Blog'],
+                'Cate' : ['/blog/category/uncategorized', 'Category'],
+                'Tags': ['blog/tags', 'Tags'],
+            },
+        },
+    }
+%}
+{% macro render_menu(links) %}
+    {% import _self as subnav %}
+
+    {% for code, link in links %}
+        <li class="{{ code == currentPage ? 'active' }} {{ link.sublinks ? 'dropdown' }}">
+            <a
+                href="{{ link.sublinks ? '#' : (link.page ?: link[0])|page }}"
+                {% if link.sublinks %}data-toggle="dropdown"{% endif %}
+                class="{{ link.sublinks ? 'dropdown-toggle' }}">
+                {{ link.name ?: link[1]|_ }}
+                {% if link.sublinks %}<span class="caret"></span>{% endif %}
+            </a>
+            {% if link.sublinks %}
+                <span class="dropdown-arrow"></span>
+                <ul class="dropdown-menu">
+                  {{ subnav.render_menu(link.sublinks) }}
+                </ul>
+            {% endif %}
+        </li>
+    {% endfor %}
+{% endmacro %}
+
+{% import _self as nav %}-->
+<nav id="layout-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="fa fa-bars"></span>
+            </button>
+            <a class="navbar-brand" href="{{ 'home'|page }}"><div class="brand-title">Homeschool Network</div></a>
+        </div>
+        <div class="collapse navbar-collapse navbar-main-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" data-toggle="dropdown" class="dropdown-toggle">{{ 'Shop'|_ }}<span class="caret"></span></a>
+              <span class="dropdown-arrow"></span>
+              <ul class="dropdown-menu">
+                <li class="">
+                  <a href="/cart" class="dropdown-toggle _ajax_cart_link_header_wrapper"><i class="fa fa-shopping-cart"></i> {{ 'Cart'|_ }} <span class="badge">{{ Cart.get().count }}</span></a>
+                </li>
+                <li class=" ">
+                  <a href="/catalog/clothes">{{ 'Clothes'|_ }}</a>
+                </li>
+                <li class=" ">
+                  <a href="/catalog/mugs">{{ 'Mugs'|_ }}</a>
+                </li>
+              </ul>
+            </li>
+            {# nav.render_menu(links) #}
+            <li class=" dropdown">
+              <a href="#" data-toggle="dropdown" class="dropdown-toggle">
+              {{ 'Blog'|_ }}
+              <span class="caret"></span></a>
+              <span class="dropdown-arrow"></span>
+              <ul class="dropdown-menu">
+                <li class=" ">
+                  <a href="/blog/page/default" class="">
+                    {{ 'All articles'|_ }}
+                  </a>
+                </li>
+                {% if blogCategories.categories|length > 0 %}
+                  {% for category in categories %}
+                    {% set postCount = category.post_count %}
+                    <li {% if category.slug == currentCategorySlug %}class="active"{% endif %}>
+                        <a href="{{ category.url }}">{{ category.name }}
+                        {% if postCount %}
+                            <span class="badge">{{ postCount }}</span>
+                        {% endif %}</a>
+
+                        {% if category.children|length > 0 %}
+                            <ul>
+                                {% partial __SELF__ ~ "::items"
+                                    categories=category.children
+                                    currentCategorySlug=currentCategorySlug
+                                %}
+                            </ul>
+                        {% endif %}
+                    </li>
+                  {% endfor %}
+
+                {% endif %}
+                <li class=" ">
+                  <a href="/blog/tags" class="">
+                    {{ 'Tags'|_ }}
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class=" dropdown">
+              <a href="#" data-toggle="dropdown" class="dropdown-toggle">{{ 'Languages'|_ }}<span class="caret"></span></a>
+              <span class="dropdown-arrow"></span>
+              <ul class="dropdown-menu">
+                <li class=" ">
+                  <a href="#" data-request="onSwitchLocale" data-request-data="locale: 'en'">English</a>
+                </li>
+                <li class=" ">
+                  <a href="#" data-request="onSwitchLocale" data-request-data="locale: 'th'">Thai</a>
+                </li>
+              </ul>
+            </li>
+            {% if not user %}
+            <li>
+              <button onclick="window.location='/login'" class="btn btn-sm navbar-btn btn-primary navbar-right hidden-sm hidden-xs">{{ 'Log in'|_ }}</button>
+            </li>
+            {% else %}
+            <li class=" dropdown">
+              <a href="#" data-toggle="dropdown" class="dropdown-toggle">
+                {% partial 'user/avatar' id=user.id facebookID=user.facebook_id style='avatar-sm' redirect=1 %}
+                {{ user.name }} {{ user.provider_id}}<span class="caret"></span></a>
+              <span class="dropdown-arrow"></span>
+              <ul class="dropdown-menu">
+                <li><a href="/edit/profile"><span class="fa fa-fw menu-icon" aria-hidden="true" >&#xf2ba;</span> {{ 'My profile'|_ }}</a></li>
+                <li><a href="/add/post"><span class="fa fa-fw menu-icon" aria-hidden="true" >&#xf040;</span> {{ 'New post'|_ }}</a></li>
+                <li><a href="/add/course"><span class="fa fa-fw menu-icon" aria-hidden="true" >&#xf0f6;</span> {{ 'Course'|_ }}</a></li>
+                <li><a href="/add/evaluation"><span class="fa fa-fw menu-icon" aria-hidden="true" >&#xf15c;</span> {{ 'Evaluation'|_ }}</a></li>
+                <li><a href="/add/portfolio"><span class="fa fa-fw menu-icon" aria-hidden="true" >&#xf1c5;</span> {{ 'New portfolio'|_ }}</a></li>
+                <li><a href="javascript:void(0);" data-request="onLogout" data-request-data="redirect: '/'"><span class="fa fa-fw menu-icon" aria-hidden="true" >&#xf08b;</span> {{ 'Sign out'|_ }}</a></li>
+              </ul>
+                  <!--<button data-request="onLogout" data-request-data="redirect: '/'" class="btn btn-sm navbar-btn btn-primary navbar-right hidden-sm hidden-xs">
+                  {{ 'Sign out'|_ }}
+                </button> -->
+            </li>
+            {% endif %}
+
+          </ul>
+        </div>
+    </div>
+</nav>

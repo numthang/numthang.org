@@ -1,0 +1,68 @@
+[viewBag]
+
+[blogCategories]
+slug = "{{ :slug }}"
+displayEmpty = 1
+categoryPage = "blog/category"
+
+[tagList]
+orderBy = "random"
+limit = 10
+enableTagFilter = "never"
+tagPage = 404
+tagsPage = 404
+==
+<!-- Search -->
+<div style="width: 100%;">
+  <script async src="https://cse.google.com/cse.js?cx=partner-pub-9939363335105757:1261107394"></script>
+  <div class="gcse-search"></div>
+</div>
+<br class="clearfix">
+{% partial 'ads/central' id='Medium Rectangle Sidebar 1st' %}
+<br class="clearfix">
+<!-- Categories -->
+<div class="panel panel-default">
+  <div class="panel-heading">
+      {{ 'Categories'|_ }}
+  </div>
+  <ul class="list-group">
+  {% for category in categories %}
+    {% set postCount = category.post_count %}
+    <li class="list-group-item" {% if category.slug == currentCategorySlug %}class="active"{% endif %}>
+        <a href="{{ category.url }}">{{ category.name }}</a>
+        {% if postCount %}
+            <span class="badge">{{ postCount }}</span>
+        {% endif %}
+
+        {% if category.children|length > 0 %}
+          <ul>
+              {% partial __SELF__ ~ "::items"
+                  categories=category.children
+                  currentCategorySlug=currentCategorySlug
+              %}
+          </ul>
+        {% endif %}
+    </li>
+  {% endfor %}
+  </ul>
+</div>
+<!-- Tags -->
+<div class="panel panel-default">
+  <div class="panel-heading">
+      <a href="/blog/tags">{{ 'Tags'|_ }}</a>
+  </div>
+  <ul class="list-group">
+    {% for tag in tagList.tags %}
+      <li class="list-group-item"><a href="/blog/tagged/{{ tag.slug }}">{{ tag.name }} ({{ tag.posts|length }})</a></li>
+    {% endfor %}
+  </ul>
+</div>
+<!-- External -->
+<div class="panel panel-default">
+  <div class="panel-heading">
+      {{ 'External'|_ }}
+  </div>
+  <ul class="list-group">
+    <li class="list-group-item"><a href="https://homeschoolthailand.wordpress.com/">ภาคีเครือข่ายบ้านเรียนไทย</a></li>
+  </ul>
+</div>

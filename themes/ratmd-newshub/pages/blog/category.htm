@@ -1,52 +1,89 @@
-##
-url = "/magazine/category/:slug/:page?"
+title = "Category"
+url = "/blog/category/:slug/:page?"
 layout = "default"
-title = "Category Archive"
-description = "Magazine - Category Archive"
-meta_title = "Category Archive"
-meta_description = "NewsHub provides an own archive page for your Blog / Magazine categories."
+is_hidden = 0
+robot_index = "index"
+robot_follow = "follow"
 
 [viewBag]
-localeUrl[de] = "/magazin/kategorie/:slug/:page?"
-localeTitle[de] = "Kategorie Archiv"
-localeMeta_title[de] = "Kategorie Archiv"
-localeMeta_description[de] = "NewsHub bietet eine eigene Archivseite für deine Blog / Magazin Kategorien."
 
-[blogPosts]
+[RainLab\Blog\Components\Posts blogPosts]
 pageNumber = "{{ :page }}"
-postsPerPage = 10
 categoryFilter = "{{ :slug }}"
+postsPerPage = 20
+noPostsMessage = "No posts found"
 sortOrder = "published_at desc"
+categoryPage = "blog/category"
+postPage = "blog/post"
 ==
-<?
-function onEnd()
-{
-    if (!empty($this->category)) {
-        $this->page->title .= ': ' . $this->category->name;
-        
-        if ($this->page->meta_title) {
-            $this->page->meta_title .= ': ' . $this->category->name;
-        }
-    } else {
-        $this->setStatusCode(404);
-        return $this->controller->run('404');
-    }
+<?php
+function onEnd() {
+  $this->page->custom_title = $this->blogPosts->category->name;
+  $this->page->custom_description = strip_tags($this->blogPosts->category->description);
 }
 ?>
 ==
-<section class="section section-posts py-6">
+{% set posts = blogPosts.posts %}
+<section id="layout-title">
     <div class="container">
-        <h1 class="mb-5">{{ 'archive.category_archive' | _ }}: {{ category.name }}</h1>
-
-        {% if posts|length > 0 %}
-            {% partial 'blog/sections/posts-list' 
-                posts=posts
-                prefix='archiv'
-                datetime='short'
-            %}
-            {% partial 'blog/components/pagination' posts=posts %}
-        {% else %}
-            {% partial 'blog/components/empty' %}
-        {% endif %}
+        <h3>{{ blogPosts.category.name }}</h3>
     </div>
 </section>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 col-md-3">
+      {% partial 'blog/sidebar' %}
+    </div>
+    <div class="col-sm-12 col-md-9">
+      {% set i = 0 %}
+      {% for post in posts %}
+      <!-- Blog Post -->
+        <h6>
+          {% partial 'user/avatar' id=post.author_id facebookID=post.author.facebook_id style='avatar-sm' redirect=1 %}
+          <a href="{{ post.url }}">{{ post.title }}</a> {% if post.author.id == user.id %} <a href="/edit/post/{{ post.slug }}">{{ 'Edit'|_ }}</a> {% endif %} </h6><span class="text-muted">{{ 'by'|_ }} <a href="/u/{{post.author_id}}">{{ post.author.name }}</a> {{ 'on'|_ }} {{ post.updated_at|date('M d, Y') }}</span>
+        
+        <p class="excerpt">
+          {% if post.excerpt %}
+            <blockquote>
+              {{ post.excerpt|raw }}
+            </blockquote>
+          {% else %}
+          {% endif %}
+        </p>
+          <!--<p class="excerpt">{{ post.summary|raw }}</p>
+          <a href="{{ post.url }}"><img class="img-responsive" src="{{ post.featured_images[0].path }}" alt=""></a>
+          <p class="info">
+            Posted
+            {% if post.categories.count %} in {% endif %}
+            {% for category in post.categories %}
+                <a href="{{ category.url }}">{{ category.name }}</a>{% if not loop.last %}, {% endif %}
+            {% endfor %}
+          </p>
+          <a class="btn btn-lg btn-default" href="{{ post.url }}">{{ 'Read More'|_}} ...</a>-->
+        <!--{% set i = i + 1 %}
+        {% if i == 2 or i == 7 or i == 15 %}-->
+        {% partial 'ads/central' id='Leaderboard in Content 1st' %}
+        <!--{% endif %}-->
+      {% endfor %}
+      <br>
+      {% if posts.lastPage > 1 %}
+      <ul class="pagination">
+          {% if posts.currentPage > 1 %}
+              <li><a href="{{ this.page.baseFileName|page({ (blogPosts.pageParam): (posts.currentPage-1) }) }}">&larr; Prev</a></li>
+          {% endif %}
+
+          {% for page in 1..posts.lastPage %}
+              <li class="{{ posts.currentPage == page ? 'active' : null }}">
+                  <a href="{{ this.page.baseFileName|page({ (blogPosts.pageParam): page }) }}">{{ page }}</a>
+              </li>
+          {% endfor %}
+
+          {% if posts.lastPage > posts.currentPage %}
+              <li><a href="{{ this.page.baseFileName|page({ (blogPosts.pageParam): (posts.currentPage+1) }) }}">Next &rarr;</a></li>
+          {% endif %}
+      </ul>
+      {% endif %}
+    </div>
+  </div>
+</div>
