@@ -1,0 +1,4 @@
+AuthType Basic
+AuthName "Numthang Acc"
+AuthUserFile /home/tee/domains/numthang.org/public_html/acc/.htpasswd
+Require valid-user

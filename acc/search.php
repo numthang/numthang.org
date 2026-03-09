@@ -1,0 +1,24 @@
+<?
+	header("Content-type: text/html; charset=UTF-8");
+	include "../inc/site.conf.php";
+	include '../inc/tric.conf.php';
+	include "../inc/db.inc.php";
+	include "../tric/inc/tbl.conf.php";
+	include "../inc/init.inc.php";
+	include "../tric/class/other/account.class.php";
+	include "../tric/class/share/text.class.php";
+	include "menu.php";
+	
+	#$_MYDB = new Mysql_Lib('account');
+	#$_MYDB->sqlQuery("set names utf8 collate utf8_unicode_ci;");
+	$account = new Account($_DB, $_TBL);
+	$o_text = new Text();
+	
+	$dat = $account->searchAccount(Array(detail=>$_POST[keyword]));
+	
+	for($i=0;$i<count($dat);$i++) {
+		$tmp = explode('-',$dat[$i][date]);
+		$result .= '<div><a href="edit.php?id='.$dat[$i][transaction_id].'">'.$dat[$i][transaction_id].'</a> | '.$dat[$i][date].' | <a href=cat_detail.php?year='.$tmp[0].'&cat='.$dat[$i][category].'>'.$dat[$i][category].'</a> | '.$dat[$i][account_id].' | '.$dat[$i][statement].' | <a href="edit.php?id='.$dat[$i][transaction_id].'">'.$o_text->highlightKeyword($_POST[keyword], '', stripslashes($dat[$i][detail])).'</a></div>';
+	}
+	echo $result;
+?>

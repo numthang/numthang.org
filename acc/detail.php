@@ -1,0 +1,98 @@
+<?
+	header("Content-type: text/html; charset=UTF-8");
+	include "../inc/site.conf.php";
+	include '../inc/tric.conf.php';
+	include "../inc/db.inc.php";
+	include "../tric/inc/tbl.conf.php";
+	include "../inc/init.inc.php";
+	include "../tric/class/other/account.class.php";
+	
+	$account = new Account($_DB, $_TBL);	
+
+		$rev_row .= "<tr>
+					<td colspan='4'><b>Month $_GET[i] Year $_GET[year] </b></td>
+				</tr>";
+		
+		$list = $account->listRevenueByCategory($_GET[i], $_GET[year], $_GET[cat]);
+		$sum = 0;
+		for($j=0; $j<count($list); $j++) {
+			$rev_row .= "<tr>
+						<td>&bull; ".$list[$j][detail]."</td>
+						<td>".$list[$j][date]."</td>
+						<td>".$list[$j][account_id]."</td>
+						<td>".number_format($list[$j][statement], 2)."</td>
+					</tr>";
+			$sum += $list[$j][statement];
+		}
+		$rev_row .= "<tr>
+				<td><b>Total</b></td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td><b>".number_format($sum, 2)."</b></td>
+			</tr>
+			<tr>
+				<td colspan='4'>&nbsp;</td>
+			</tr>";
+
+		//Exp row
+		$exp_row .= "<tr>
+					<td colspan='4'><b>Month $_GET[i] Year $_GET[year]</b></td>
+				</tr>";
+		$list = $account->listExpenseByCategory($_GET[i], $_GET[year], $_GET[cat]);
+		$sum = 0;
+		for($j=0; $j<count($list); $j++) {
+			$exp_row .= "<tr>
+						<td><a href='edit.php?id=".$list[$j][transaction_id]."'>&bull; ".$list[$j][detail]."</td>
+						<td>".$list[$j][date]."</td>
+						<td>".$list[$j][account_id]."</td>
+						<td>".number_format($list[$j][statement], 2)."</td>
+					</tr>";
+			$sum += $list[$j][statement];
+		}
+		$exp_row .= "<tr>
+				<td><b>Total</b></td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td><b>".number_format($sum, 2)."</b></td>
+			</tr>
+			<tr>
+				<td colspan='4'>&nbsp;</td>
+			</tr>";
+?>
+<? include "menu.php"; ?>
+<br><br>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="th">
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+  <title>ACC</title>
+</head>
+<body>
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+	<tr>
+		<td valign="top" width="50%">
+			<table cellpadding="2" cellspacing="2" border="1" width="100%">
+				<tr>
+					<td><b>Revenue About <?=$_GET[cat]?></b></td>
+					<td>Date</td>
+					<td>Account</td>
+					<td>Amount</td>
+				</tr>
+				<?=$rev_row?>
+			</table>
+		</td>
+		<td width="50%">
+			<table cellpadding="2" cellspacing="2" border="1" width="100%">
+				<tr>
+					<td><b>Expense About <?=$_GET[cat]?></b></td>
+					<td>Date</td>
+					<td>Account</td>
+					<td>Amount</td>
+				</tr>
+				<?=$exp_row?>
+			</table>
+		</td>
+	</tr>
+</table>
+</body>
+</html>

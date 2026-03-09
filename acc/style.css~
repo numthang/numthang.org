@@ -1,0 +1,123 @@
+table,body,textarea,input,select, td {
+	/*font-family: 'Trebuchet MS', Tahoma, 'MS Sans Serif', 'Microsoft Sans Serif', Loma, Verdana, Geneva, Arial, Helvetica, sans-serif;*/
+	font-family: Loma, Tahoma, 'MS Sans Serif', 'Microsoft Sans Serif', Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 14px;
+}
+a {
+	color: #799A33;
+	text-decoration: underline;
+}
+a:hover {
+	color: #000000;
+	text-decoration: none;
+}
+a:visited {
+	color: #0000FF;
+	text-decoration: underline;	
+}
+.small {
+	color: #9a9a9a;
+	font-size: 10px;
+}
+
+.block4 {
+	border: 0px solid;
+	width: 48%;
+	height: 260;
+	float: left;
+	padding: 4;
+}
+
+.button{
+  background: url(/themes/Default/images/button_bg.png) repeat-x;
+	text-align : center;
+	cursor: pointer;
+	height: 22px;
+}
+.table {
+	border: 1px solid #F0F0F0;
+	width: 100%;
+}
+.tableHead {
+  background: url(/themes/Default/images/head_bg.png) repeat-x;
+	font-weight: bold;
+}
+.tableRow1 {
+  background: url(/themes/Default/images/row1_bg.png) repeat-y;
+}
+.sb_quote {
+        padding:5px;
+        border:solid 1px #CCCCCC;
+        background-color:#F7E4E7;
+        color: #676767;
+        font-size: 8pt;
+        display: block;
+        }
+.sb_review_quote  {
+        padding:5px;
+        border:solid 1px #000000;
+        background-color:#F7E4E7;
+       	color: #676767;
+        font-size: 8pt;
+        display: block;
+        }
+td pre {
+   font-family: 'Courier', 'Courier New', 'sans-serif';
+   font-size: 8pt;
+   color: #006600;
+   background-color: #FAFAFA;
+   border: #D1D7DC;
+   border-style: solid;
+   border-left-width: 1px; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px;
+}
+div.imgBorder {
+	height: 70px;
+	width: 88px;
+	border-top: 1px solid #ccc;
+	border-left: 1px solid #ccc;
+	border-right: 1px solid #ccc;
+	vertical-align: middle;
+}
+div.imgBorder a {
+	height: 70px;
+	width: 88px;
+	display: block;
+	overflow: hidden;
+	vertical-align: middle;
+}
+div.imgBorder a:hover {
+	height: 70px;
+	width: 88px;
+	background-color: #EFFAFE;
+	color : #FF6600;
+	vertical-align: middle;
+}
+div.imginfoBorder {
+	background: #FAFAFA;
+	width: 84px !important;
+	width: 90px;
+	height: 35px;
+	vertical-align: middle;
+	padding: 2px;
+	overflow: hidden;
+	border: 1px solid #ccc;
+}
+.readonly {
+	border: 0px solid #CCC;
+	padding: 2px;
+}
+.headTopic {
+	color: #BE902B;
+	font-weight: bold;
+}
+.imgBorder {
+	border: 1px solid #CCC;
+	padding: 1px;
+}
+.replyFooter {
+	font-weight: bold;
+}
+.headContent {
+	color: #BE902B;
+	font-weight: bold;
+}

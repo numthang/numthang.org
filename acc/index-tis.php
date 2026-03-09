@@ -1,0 +1,137 @@
+<?
+	define("_RPOS", 1);
+	include "../inc/mydir.conf.php";
+	include $_DOCROOT[_RPOS]."/inc/tbl.conf.php";
+	#include $_DOCROOT[_RPOS]."/inc/db.inc.php";
+	include $_DOCROOT[_RPOS]."/class/account.class.php";
+	include $_CLASSDIR."/share/mysqlext.class.php";
+	
+	$dol = 37;
+	$_MYDB = new Mysql_Lib('account');
+	$account = new Account($_MYDB, $_TBL);
+	
+	$result = $_MYDB->sqlQuery("INSERT INTO `Account` VALUES ('SCB_KBI','ธ. ไทยพานิชย์ สาขา กระบี่\r\n\r\nชื่อบัญชี ทิตา ยศโสภณ\r\n\r\nเลขที่บัญชี 572-2-30290-8');");
+				
+	empty($_GET[year]) ? $_GET[year] = date('Y') : 1;
+	
+	$dat = $account->listAllAccount('detail');
+	
+	for($i=0; $i<count($dat); $i++) {
+	
+		$rev = $account->getRevenueByAccount($dat[$i][account_id]);
+		$exp = $account->getExpenseByAccount($dat[$i][account_id]);
+		$bal = $account->getBalanceByAccount($dat[$i][account_id]);
+		
+		if($dat[$i][account_id] == "PAYPAL") {
+			#$rev = $rev*$dol;
+			#$exp = $exp*$dol;
+			#$bal_dol = $bal;
+			#$bal = $bal*$dol;
+		}
+		else
+			$bal_dol = "";
+		
+	   $acc_row .= "<tr>
+					<td>".$dat[$i][detail]." <b>(".$dat[$i][account_id].")</b></td>
+			      <td>".number_format($rev, 2)."</td>
+			      <td>".number_format($exp, 2)."</td>
+			      <td><a href=\"bal_detail.php?year=2006&account_id=".$dat[$i][account_id]."\">".number_format($bal, 2)." $bal_dol</a></td>
+			    </tr>";
+		$bal_sum += $bal;
+	}
+	$acc_row .= "<tr style='font-weight: bold;'>
+					<td>Total</td>
+			      <td>&nbsp;</td>
+			      <td>&nbsp;</td>
+			      <td><a href=\"bal_detail.php?year=2006\">".number_format($bal_sum, 2)."</td>
+			    </tr>";
+	
+	for($i=1; $i<=12; $i++) {
+		$rev_row .= "<tr>
+					<td><b>Month $i Year $_GET[year]</b></td>
+					<td>&nbsp;</td>
+				</tr>";
+		$list = $account->listGroupRevenueByMonth($i, $_GET[year]);
+		$sum = 0;
+		for($j=0; $j<count($list); $j++) {
+			$rev_row .= "<tr>
+						<td><a href=cat_detail.php?year=2006&cat=".$list[$j][category].">".$list[$j][category]."</a></td>
+						<td><a href='detail.php?cat=".$list[$j][category]."&i=$i&year=$_GET[year]&list=Revenue'>".number_format($list[$j][sum_statement], 2)."</a></td>
+					</tr>";
+			$sum += $list[$j][sum_statement];
+		}
+		$rev_row .= "<tr>
+				<td><b>Total</b></td>
+				<td><b><a href='detail.php?cat=".$list[$j][category]."&i=$i&year=$_GET[year]&list=Revenue'>".number_format($sum, 2)."</a></b></td>
+			</tr>
+			<tr>
+				<td colspan='2'>&nbsp;</td>
+			</tr>";
+		
+		//Exp row
+		$exp_row .= "<tr>
+					<td><b>Month $i Year $_GET[year]</b></td>
+					<td>&nbsp;</td>
+				</tr>";
+		$list = $account->listGroupExpenseByMonth($i, $_GET[year]);
+		$sum = 0;
+		for($j=0; $j<count($list); $j++) {
+			$exp_row .= "<tr>
+						<td><a href=cat_detail.php?year=2006&cat=".$list[$j][category].">".$list[$j][category]."</a></td>
+						<td><a href='detail.php?cat=".$list[$j][category]."&i=$i&year=$_GET[year]&list=Expense'>".number_format($list[$j][sum_statement], 2)."</a></td>
+					</tr>";
+			$sum += $list[$j][sum_statement];
+		}
+		$exp_row .= "<tr>
+				<td><b>Total</b></td>
+				<td><b><a href='detail.php?cat=".$list[$j][category]."&i=$i&year=$_GET[year]&list=Expense'>".number_format($sum, 2)."</a></b></td>
+			</tr>
+			<tr>
+				<td colspan='2'>&nbsp;</td>
+			</tr>";
+	}
+?>
+<a href="?year=2005">2005</a> | <a href="?year=2006">2006</a> | <a href="?year=2007">2007</a>
+<br><br>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="th">
+<head>
+  <meta content="text/html; charset=tis-620" http-equiv="content-type">
+  <title>ACC</title>
+</head>
+<body>
+<table border="1" cellpadding="2" cellspacing="2" width="100%">
+  <tbody>
+    <tr style="font-weight: bold;">
+      <td>Account Summary</td>
+      <td>รายรับ (Revenue)</td>
+      <td>รายจ่าย (Expense)</td>
+      <td>คงเหลือ (Balance)</td>
+    </tr>
+		<?=$acc_row?>
+  </tbody>
+</table>
+<br>
+
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+	<tr>
+		<td valign="top" width="50%">
+			<table cellpadding="2" cellspacing="2" border="1" width="100%">				<tr>
+					<td><b>Revenue Summary</b></td>
+					<td>&nbsp;</td>
+				</tr>
+				<?=$rev_row?>
+			</table>
+		</td>
+		<td width="50%">
+			<table cellpadding="2" cellspacing="2" border="1" width="100%">				<tr>
+					<td><b>Expense Summary</b></td>
+					<td>&nbsp;</td>
+				</tr>
+				<?=$exp_row?>
+			</table>
+		</td>
+	</tr>
+</table>
+</body>
+</html>

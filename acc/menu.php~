@@ -1,0 +1,5 @@
+<form action="./search.php" method="post">
+<input type="text" name="keyword" value="<?=$_POST[keyword]?>">
+</form>
+<link href="./style.css" rel="stylesheet" type="text/css">
+<a href="./?year=2005">2005</a> | <a href="./?year=2006">2006</a> | <a href="./?year=2007">2007</a> | <a href="./?year=2008">2008</a> | <a href="./?year=2009">2009</a> | <a href="./?year=2010">2010</a>| <a href="./?year=2011">2011</a> | <a href="insert.php">กรอก transaction</a> | <a href="sum_cat.php?year=<?=$_GET[year]?>">Summary By Category</a>

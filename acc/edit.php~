@@ -1,0 +1,53 @@
+<?
+	header("Content-type: text/html; charset=UTF-8");
+	include "../inc/site.conf.php";
+	include '../inc/tric.conf.php';
+	include "../inc/db.inc.php";
+	include "../inc/tbl.conf.php";
+	include "../inc/init.inc.php";
+	include "../tric/class/other/account.class.php";
+
+	$account = new Account($_MYDB, $_TBL);
+	
+	if(isset($_POST[submit])) {
+		$account->editStatement($_POST);
+	}
+	if(isset($_POST[del])) {
+		$account->delStatement($_POST[transaction_id]);
+	}
+	
+	$dat = $account->listAllAccount();
+	for($i=0;$i<count($dat);$i++) {
+		$a_opt .= "<option value='".$dat[$i][account_id]."'>".$dat[$i][account_id]." ------- ".$dat[$i][alias]."</option>";
+	}
+	
+	$dat = Array('Business','Business2', 'Baby', 'Home', 'Necessary', 'Consumer', 'Snack', 'Food', 'Fruit', 'Insurance', 'Travel', 'Cash Flow', 'Fee', 'Donation', 'Book', 'Transportation', 'Medical', 'Clothing', 'Cosmetic', 'Salary', 'Lost', 'Entertainment', 'Computer', 'Telecommunication', 'Electric', 'Water', 'Pet', 'Plant', 'Freelance', 'Other');
+	for($i=0;$i<count($dat);$i++) {
+		$c_opt .= "<option value='".$dat[$i]."'>".$dat[$i]."</option>";
+	}
+	
+	$info = $account->getStatementInfo($_GET[id]);
+?>
+<? include "menu.php"; ?>
+<br><br>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="th">
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+  <title>ACC INSERT</title>
+</head>
+<body>
+<form name="form1" method="post" action="<?=$_SERVER[REQUEST_URI]?>">
+<input type="hidden" name="transaction_id" value="<?=$_GET[id]?>">
+Date : <input name="date" type="text" value="<?=$info[0][date]?>"><br><br>
+Category : <select name="category"><?=$c_opt?></select><br><br>
+Account : <select name="account_id"><?=$a_opt?></select><br><br>
+Statement : <input type="text" name="statement" value="<?=$info[0][statement]?>"> Baht<br><br>
+Detail : <textarea name="detail" cols="40" rows="5"><?=$info[0][detail]?></textarea><br><br>
+<input type="submit" name="submit" value="save"> <input type="submit" name="del" value="del">
+</form>
+</body>
+<script>
+	document.form1.account_id.value = '<?=$info[0][account_id]?>';
+	document.form1.category.value = '<?=$info[0][category]?>';
+</script>

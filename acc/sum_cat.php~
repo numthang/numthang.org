@@ -1,0 +1,19 @@
+<?
+	header("Content-type: text/html; charset=UTF-8");
+	include "../inc/site.conf.php";
+	include '../inc/tric.conf.php';
+	include "../inc/db.inc.php";
+	include "../inc/tbl.conf.php";
+	include "../inc/init.inc.php";
+	include "../tric/class/other/account.class.php";
+ 	include "menu.php";
+
+	echo ;
+	$account = new Account($_DB, $_TBL);
+	
+	$dat = $account->summaryByCategory($_GET[year]);
+	for($i=0; $i<count($dat); $i++)
+		$row .= "<b><a href=cat_detail.php?year=$_GET[year]&cat=".$dat[$i][category].">".$dat[$i][category]."</a></b> = ".number_format($dat[$i]['sum(statement)'], 2)."<br>";
+	
+	echo '<p>'.$row.'</p>';
+?>
